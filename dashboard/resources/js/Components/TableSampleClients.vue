@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from "vue";
-import { useMainStore } from "@/Stores/main";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
 import CardBoxModal from "@/Components/CardBoxModal.vue";
 import TableCheckboxCell from "@/Components/TableCheckboxCell.vue";
@@ -8,14 +7,18 @@ import BaseLevel from "@/Components/BaseLevel.vue";
 import BaseButtons from "@/Components/BaseButtons.vue";
 import BaseButton from "@/Components/BaseButton.vue";
 import UserAvatar from "@/Components/UserAvatar.vue";
+import axios from 'axios';
 
-defineProps({
+const props = defineProps({
   checkable: Boolean,
+  data: Array,
 });
 
-const mainStore = useMainStore();
-
-const items = computed(() => mainStore.clients);
+// fetch items need to change the source
+const items = ref([]);
+axios.get('/data-sources/clients.json').then(response => {
+  items.value = response.data.data;
+});
 
 const isModalActive = ref(false);
 
@@ -72,6 +75,7 @@ const checked = (isChecked, client) => {
 };
 </script>
 
+
 <template>
   <CardBoxModal v-model="isModalActive" title="Sample modal">
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
@@ -89,8 +93,7 @@ const checked = (isChecked, client) => {
       {{ checkedRow.name }}
     </span>
   </div>
-
-  <table>
+    <table>
     <thead>
       <tr>
         <th v-if="checkable" />

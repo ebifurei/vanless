@@ -14,11 +14,15 @@ import AsideMenu from "@/Components/AsideMenu.vue";
 import FooterBar from "@/Components/FooterBar.vue";
 import { Inertia } from "@inertiajs/inertia";
 
+const props = defineProps({
+  user: Object,
+});
+
 useMainStore().setUser({
-  name: "John Doe",
-  email: "john@example.com",
+  name: props.user.name,
+  email: props.user.email,
   avatar:
-    "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
+    "https://avatars.dicebear.com/api/avataaars/" + props.user.name.replace(/[^a-z0-9]+/i, "-") + ".svg",
 });
 
 const layoutAsidePadding = "xl:pl-60";
