@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UplinkController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,7 +17,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -24,8 +26,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('HomeView');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+// send uplink to chirpstack if visit /uplink/test
+Route::get('/uplink/test', function () {
+    return Inertia::render('UplinkTest');
+});
+
+Route::post('/uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name('uplink.chirpstack');
