@@ -26,10 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::find(Auth::id());
-
-        return Inertia::render('HomeView', [
-            'user' => $user
-        ]);
+        return Inertia::render('HomeView');
     }
 }

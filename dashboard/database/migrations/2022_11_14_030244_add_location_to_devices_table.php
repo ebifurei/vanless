@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->json('latest_payload')->nullable();
-            $table->timestampTz('latest_payload_at')->nullable()->default(now());
+            $table->string('address')->nullable();
+            $table->decimal('longitude', 8, 6)->nullable();
+            $table->decimal('latitude', 9, 6)->nullable();
         });
     }
 
@@ -27,8 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->dropColumn('latest_payload');
-            $table->dropColumn('latest_payload_at');
+            $table->dropColumn('address');
+            $table->dropColumn('longitude');
+            $table->dropColumn('latitude');
         });
     }
 };
