@@ -1,5 +1,5 @@
 <script setup>
-import { mdiEye, mdiMarker, mdiTrashCan } from '@mdi/js';
+import { mdiEye, mdiGoogleMaps, mdiMarker, mdiTrashCan } from '@mdi/js';
 import BaseButton from './BaseButton.vue';
 import BaseButtons from './BaseButtons.vue';
 import PillTagTrend from './PillTagTrend.vue';
@@ -69,7 +69,7 @@ import UserAvatar from './UserAvatar.vue';
               <div class="space-x-1">
                 <BaseButton :icon="mdiEye" />
                 <BaseButton :icon="mdiTrashCan" />
-                <BaseButton :icon="mdiMarker" />
+                <BaseButton :icon="mdiGoogleMaps" />
               </div>
             </td>
             </tr>

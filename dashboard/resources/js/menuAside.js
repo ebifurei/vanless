@@ -10,7 +10,7 @@ import {
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
-  mdiLocationEnter,
+  mdiGoogleMaps,
 } from "@mdi/js";
 
 export default [
@@ -27,7 +27,7 @@ export default [
   {
     route: "location.index",
     label: "Location",
-    icon: mdiLocationEnter,
+    icon: mdiGoogleMaps,
   },
   {
     route: "dashboard",
