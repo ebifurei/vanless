@@ -9,7 +9,6 @@
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
-        <script src="https://unpkg.com/vue3-google-map"></script>
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

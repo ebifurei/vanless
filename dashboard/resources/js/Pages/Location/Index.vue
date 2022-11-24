@@ -10,7 +10,7 @@
         <GoogleMap :api-key="googleAPI" style="width: 100%; height: 500px" :center="center" :zoom="15">
           <Marker :options="{ position: center }">
             <InfoWindow>
-              <div id="contet">
+              <div id="content">
                 <div id="siteNotice"></div>
                 <h1 id="firstHeading" class="firstHeading">Uluru</h1>
                 <div id="bodyContent">

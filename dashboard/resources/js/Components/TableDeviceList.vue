@@ -5,12 +5,12 @@ import BaseButtons from './BaseButtons.vue';
 import PillTagTrend from './PillTagTrend.vue';
 import UserAvatar from './UserAvatar.vue';
 
-  const props = defineProps({
-    deviceList: {
-      type: Array,
-      required: true,
-    },
-  });
+const props = defineProps({
+  deviceList: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -41,40 +41,41 @@ import UserAvatar from './UserAvatar.vue';
           </td>
           <td data-label="Name">
             {{ device.device_name ?? device.device_id }}
-            </td>
-            <td data-label="Device ID">
-              {{ device.device_id }}
-            </td>
-            <td data-label="Device EUI">
-              {{ device.device_eui }}
-            </td>
-            <td data-label="Address">
-              {{ device.address ?? "No address" }}
-            </td>
-            <td data-label="Progress Daily">
-              <div>
-                <progress class="progress progress-success" :value="device.progress_daily ?? 20" max="144"></progress>
+          </td>
+          <td data-label="Device ID">
+            {{ device.device_id }}
+          </td>
+          <td data-label="Device EUI">
+            {{ device.device_eui }}
+          </td>
+          <td data-label="Address">
+            {{ device.address ?? "No address" }}
+          </td>
+          <td data-label="Progress Daily">
+            <div>
+              <progress class="progress progress-success" :value="device.progress_daily ?? 20" max="144">
                 {{ device.progress_daily ?? 20 }}/144
-              </div>
-            </td>
-            <td data-label="Last Payload">
-              <div class="lg:w-44 overflow-auto">
-                {{ device.latest_payload }}
-              </div>
-            </td>
-            <td data-label="Last seen">
-              {{ device.latest_payload_at }}
-              </td>
-            <td data-label="Actions">
-              <div class="space-x-1">
-                <BaseButton :icon="mdiEye" />
-                <BaseButton :icon="mdiTrashCan" />
-                <BaseButton :icon="mdiGoogleMaps" />
-              </div>
-            </td>
-            </tr>
-            </tbody>
-            </table>
+              </progress> {{ device.progress_daily ?? 20 }}/144
+            </div>
+          </td>
+          <td data-label="Last Payload">
+            <div class="lg:w-44 overflow-auto">
+              {{ device.latest_payload }}
+            </div>
+          </td>
+          <td data-label="Last seen">
+            {{ device.latest_payload_at }}
+          </td>
+          <td data-label="Actions">
+            <div class="space-x-1">
+              <BaseButton :icon="mdiEye" />
+              <BaseButton :icon="mdiTrashCan" />
+              <BaseButton :icon="mdiGoogleMaps" />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

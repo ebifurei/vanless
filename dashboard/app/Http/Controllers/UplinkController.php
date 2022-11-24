@@ -7,12 +7,17 @@ use App\Mappers\UplinkMapperInterface;
 use App\Models\Device;
 use App\Models\Uplink;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UplinkController extends Controller
 {
     public function index()
     {
-        return ('uplinks.index');
+        $uplinks = Uplink::with('device')->latest()->paginate(10);
+
+        return Inertia::render('Uplink/Index', [
+            'uplinks' => $uplinks,
+        ]);
     }
 
     public function chirpstack(Request $request)

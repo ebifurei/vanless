@@ -11,6 +11,7 @@ import {
   mdiResponsive,
   mdiPalette,
   mdiGoogleMaps,
+  mdiUpload,
 } from "@mdi/js";
 
 export default [
@@ -21,7 +22,7 @@ export default [
   },
   {
     route: "devices.index",
-    label: "Tables",
+    label: "Devices Table",
     icon: mdiTable,
   },
   {
@@ -30,9 +31,9 @@ export default [
     icon: mdiGoogleMaps,
   },
   {
-    route: "dashboard",
-    label: "UI",
-    icon: mdiTelevisionGuide,
+    route: "uplink.index",
+    label: "Uplinks Table",
+    icon: mdiUpload,
   },
   {
     route: "dashboard",

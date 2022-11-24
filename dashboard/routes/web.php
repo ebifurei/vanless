@@ -42,3 +42,4 @@ Route::post('uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name(
 
 Route::resource('devices', DeviceController::class);
 Route::resource('location', LocationController::class);
+Route::resource('uplink', UplinkController::class);
