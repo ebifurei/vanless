@@ -2,29 +2,20 @@
 import {
   mdiChartTimelineVariant,
   mdiGithub,
-  mdiWifiCheck,
-  mdiAlert,
-  mdiWrenchClock,
   mdiUpload,
-  mdiPowerOff,
-  mdiPowerOn,
-  mdiCloseCircle,
-  mdiCheckUnderline,
   mdiCheckCircleOutline,
   mdiCloseCircleOutline,
-  mdiAlertCircleCheckOutline,
   mdiAlertCircleOutline,
   mdiClockAlertOutline,
 } from "@mdi/js";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
 import CardBox from "@/Components/CardBox.vue";
-import TableSampleClients from "@/Components/TableSampleClients.vue";
 import BaseButton from "@/Components/BaseButton.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.vue";
 import { Head } from '@inertiajs/inertia-vue3';
-import TableDeviceList from '@/Components/TableDeviceList.vue';
+import TableDeviceListHome from '@/Components/TableDeviceListHome.vue';
 
 const deviceStatusColor = (status) => {
   if (status === "danger") {
@@ -63,19 +54,17 @@ const deviceStatusIcon = (status) => {
     <Head title="Dashboard" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        <BaseButton href="#" target="_blank" :icon="mdiGithub" label="GitHub" color="contrast" rounded-full small />
+        <!-- <BaseButton href="#" target="_blank" :icon="mdiGithub" label="GitHub" color="contrast" rounded-full small /> -->
       </SectionTitleLineWithButton>
-      <!-- foreach device on devices key index -->
       <div class="grid grid-cols-2 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget v-for="(device, index) in $page.props.devices" :key="index" :number="100" :trend="device.status"
+        <CardBoxWidget v-for="device in $page.props.devices" :key="device.id" :number="100" :trend="device.status"
           :trend-type="device.status" :label="device.name ?? device.device_id" :color="deviceStatusColor(device.status)"
-          :icon="deviceStatusIcon(device.status)" />
+          :icon="deviceStatusIcon(device.status)" :last-seen="device.last_payload_at" />
       </div>
 
       <SectionTitleLineWithButton :icon="mdiUpload" title="Latest Uplinks" />
       <CardBox has-table>
-        <!-- <TableSampleClients /> -->
-        <TableDeviceList />
+        <TableDeviceListHome />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

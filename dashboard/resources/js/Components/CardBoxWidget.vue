@@ -44,6 +44,10 @@ defineProps({
     type: String,
     default: null,
   },
+  lastSeen: {
+    type: String,
+    default: 'now',
+  },
 });
 </script>
 
@@ -64,8 +68,11 @@ defineProps({
         <h1 class="text-3xl leading-tight font-semibold">
           <NumberDynamic :value="number" :prefix="prefix" :suffix="suffix" />
         </h1>
+        <h3 class="text-sm mt-2 leading-tight text-gray-500 dark:text-slate-400">
+          Last seen : {{ lastSeen }}
+        </h3>
       </div>
-      <BaseIcon v-if="icon" :path="icon" size="48" w="" h="h-16" :class="color" />
+      <BaseIcon v-if="icon" :path="icon" size="75" w="" h="h-16" :class="color" />
     </BaseLevel>
   </CardBox>
 <CardBoxModal v-model="isModalActive" title="Sample modal">

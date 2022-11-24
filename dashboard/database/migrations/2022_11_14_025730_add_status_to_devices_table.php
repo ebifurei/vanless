@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('devices', function (Blueprint $table) {
-            // status column with choices of danger, inactive, maintenance, and active
-            $table->enum('status', ['danger', 'inactive', 'maintenance', 'active'])->default('active');
+            $table->enum('status', ['danger', 'inactive', 'onrepair', 'active'])->default('active');
         });
     }
 

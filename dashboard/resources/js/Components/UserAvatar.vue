@@ -35,7 +35,7 @@ const statusColor = computed(() => {
     return "%23475569"
   }
 
-  if (props.status === "maintenance") {
+  if (props.status === "onrepair") {
     return "%23eab308";
   }
 

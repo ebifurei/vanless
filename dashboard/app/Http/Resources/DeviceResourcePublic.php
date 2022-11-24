@@ -19,12 +19,13 @@ class DeviceResourcePublic extends JsonResource
             'device_id' => $this->device_id,
             'name' => $this->name,
             'description' => $this->description,
-            'timezone' => $this->timezone,
+            // 'timezone' => $this->timezone,
             'status' => $this->status,
-            'last_payload' => $this->latest_payload,
+            // 'last_payload' => $this->latest_payload,
             'last_payload_at' => $this->latest_payload_at,
             'latitude' => $this->latitude ?? -7.765955,
             'longitude' => $this->longitude ?? 110.371561,
+            'created_at' => $this->created_at->toDateString(),
         ];
     }
 }

@@ -10,6 +10,7 @@ import {
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
+  mdiLocationEnter,
 } from "@mdi/js";
 
 export default [
@@ -24,9 +25,9 @@ export default [
     icon: mdiTable,
   },
   {
-    route: "dashboard",
-    label: "Forms",
-    icon: mdiSquareEditOutline,
+    route: "location.index",
+    label: "Location",
+    icon: mdiLocationEnter,
   },
   {
     route: "dashboard",

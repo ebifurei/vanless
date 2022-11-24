@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UplinkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Http;
@@ -39,5 +40,5 @@ Route::get('/uplink/test', function () {
 // uplink chirpstack route
 Route::post('uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name('uplink.chirpstack');
 
-// devices route
 Route::resource('devices', DeviceController::class);
+Route::resource('location', LocationController::class);

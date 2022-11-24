@@ -23,7 +23,7 @@ const trendStyle = computed(() => {
     };
   }
 
-  if (props.trendType === "maintenance") {
+  if (props.trendType === "onrepair") {
     return {
       icon: mdiTools,
       style: "warning",
