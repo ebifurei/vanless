@@ -7,7 +7,7 @@
         <!--  -->
       </SectionTitleLineWithButton>
 
-      <TableUplinkList :uplinksData="uplinks" />
+      <TableUplinkList />
 
     </SectionMain>
   </LayoutAuthenticated>
@@ -20,14 +20,6 @@ import SectionMain from '@/Components/SectionMain.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
 import TableUplinkList from '@/Components/TableUplinkList.vue';
 import { mdiLinkVariant } from '@mdi/js';
-import { defineProps } from 'vue';
-
-const props = defineProps({
-  uplinks: {
-    type: Object,
-    required: true,
-  },
-});
 
 </script>
 

@@ -1,15 +1,9 @@
 <script setup>
-import { mdiEye, mdiGoogleMaps, mdiMarker, mdiTrashCan } from '@mdi/js';
+import { mdiMarker, mdiGoogleMaps, mdiTrashCan } from '@mdi/js';
 import BaseButton from '@/Components/BaseButton.vue';
 import PillTagTrend from '@/Components/PillTagTrend.vue';
 import UserAvatar from '@/Components/UserAvatar.vue';
 
-const props = defineProps({
-  deviceList: {
-    type: Array,
-    required: true,
-  },
-});
 </script>
 
 <template>
@@ -30,7 +24,7 @@ const props = defineProps({
         </tr>
       </thead>
       <tbody>
-        <tr v-for="device in deviceList" :key="device.id">
+        <tr v-for="device in $page.props.deviceList" :key="device.id">
           <td class="lg:hidden">
             <UserAvatar :username="device.device_id" :api="'initials'" :status="device.status" :font-size="40"
               class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
@@ -67,7 +61,7 @@ const props = defineProps({
           </td>
           <td data-label="Actions">
             <div class="space-x-1">
-              <BaseButton :icon="mdiEye" />
+              <BaseButton :icon="mdiMarker" />
               <BaseButton :icon="mdiTrashCan" />
               <BaseButton :icon="mdiGoogleMaps" />
             </div>

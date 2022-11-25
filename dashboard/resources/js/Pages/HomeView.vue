@@ -6,7 +6,6 @@ import {
   mdiCloseCircleOutline,
   mdiAlertCircleOutline,
   mdiClockAlertOutline,
-  mdiAccessPoint,
 } from "@mdi/js";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
@@ -14,15 +13,7 @@ import CardBox from "@/Components/CardBox.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.vue";
 import { Head } from '@inertiajs/inertia-vue3';
-import TableDeviceListHome from '@/Components/TableDeviceListHome.vue';
 import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
-
-const props = defineProps({
-  uplinks: {
-    type: Array,
-    required: true,
-  },
-});
 
 const deviceStatusColor = (status) => {
   if (status === "danger") {
@@ -71,7 +62,7 @@ const deviceStatusIcon = (status) => {
       </div>
       <SectionTitleLineWithButton :icon="mdiUpload" title="6 Latest Uplinks" />
       <CardBox has-table>
-        <TableUplinkListHome :uplinks-data="uplinks" />
+        <TableUplinkListHome :uplinks-data="$page.props.uplinks" />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>
