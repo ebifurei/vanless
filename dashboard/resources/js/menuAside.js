@@ -10,7 +10,8 @@ import {
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
-  mdiReact,
+  mdiGoogleMaps,
+  mdiUpload,
 } from "@mdi/js";
 
 export default [
@@ -20,19 +21,19 @@ export default [
     label: "Dashboard",
   },
   {
-    route: "dashboard",
-    label: "Tables",
+    route: "devices.index",
+    label: "Devices Table",
     icon: mdiTable,
   },
   {
-    route: "dashboard",
-    label: "Forms",
-    icon: mdiSquareEditOutline,
+    route: "location.index",
+    label: "Location",
+    icon: mdiGoogleMaps,
   },
   {
-    route: "dashboard",
-    label: "UI",
-    icon: mdiTelevisionGuide,
+    route: "uplink.index",
+    label: "Uplinks Table",
+    icon: mdiUpload,
   },
   {
     route: "dashboard",
@@ -72,15 +73,9 @@ export default [
     ],
   },
   {
-    href: "https://github.com/justboil/admin-one-vue-tailwind",
+    href: "#",
     label: "GitHub",
     icon: mdiGithub,
-    target: "_blank",
-  },
-  {
-    href: "https://github.com/justboil/admin-one-react-tailwind",
-    label: "React version",
-    icon: mdiReact,
     target: "_blank",
   },
 ];

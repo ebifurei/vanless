@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UplinkResource;
 use App\Mappers\ChirpstackUplinkMapper;
 use App\Mappers\UplinkMapperInterface;
 use App\Models\Device;
 use App\Models\Uplink;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UplinkController extends Controller
 {
     public function index()
     {
-        return ('uplinks.index');
+        return Inertia::render('Uplink/Index', [
+            'uplinks' => Uplink::latest()->paginate(6)
+                ->withQueryString()
+                ->through(fn ($uplink) => new UplinkResource($uplink)),
+        ]);
     }
 
     public function chirpstack(Request $request)
@@ -30,12 +36,12 @@ class UplinkController extends Controller
         $data = [
             'device_id' => $mapper->getDeviceId(),
             'date' => $mapper->getTime()->toDateString(),
+            'port' => $mapper->getPort(),
         ];
 
         $payload = $mapper->getPayload();
 
         $uplink = Uplink::create($data, [
-            'port' => $mapper->getPort(),
             'payloads' => [],
         ]);
 
@@ -46,7 +52,7 @@ class UplinkController extends Controller
         $device = Device::firstOrCreate([
             'device_id' => $mapper->getDeviceId(),
         ], [
-            'name' => $mapper->getDeviceId(),
+            'name' => null,
             'timezone' => 'Asia/Jakarta',
             'device_eui' => $mapper->getEui(),
             'latest_payload' => [],
@@ -57,8 +63,6 @@ class UplinkController extends Controller
         $device->latest_payload_at = $uplink->created_at;
         $device->save();
 
-        return response()->json([
-            'data' => $uplink
-        ]);
+        return response()->noContent();
     }
 }

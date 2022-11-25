@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UplinkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Http;
@@ -26,7 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
@@ -35,4 +37,9 @@ Route::get('/uplink/test', function () {
     return Inertia::render('UplinkTest');
 });
 
-Route::post('/uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name('uplink.chirpstack');
+// uplink chirpstack route
+Route::post('uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name('uplink.chirpstack');
+
+Route::resource('devices', DeviceController::class);
+Route::resource('location', LocationController::class);
+Route::resource('uplink', UplinkController::class);

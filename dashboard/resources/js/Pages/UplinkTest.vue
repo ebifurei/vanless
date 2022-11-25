@@ -19,9 +19,9 @@ export default {
       axios.post('/uplink/chirpstack?event=up', {
         // data to send
         applicationID: '1',
-        applicationName: 'LunarApp1',
-        deviceName: 'sbiot-rfm01',
-        devEUI: 'vVnh4aKM7Ho=',
+        applicationName: 'LoraAntiVandalisme',
+        deviceName: 'vanless-5',
+        devEUI: 'vVnh4aKO7Ho=',
         rxInfo: [
           {
             gatewayID: 'b827ebfffee12e02',

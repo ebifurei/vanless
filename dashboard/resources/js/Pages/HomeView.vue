@@ -1,73 +1,77 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
-import { useMainStore } from "@/Stores/main";
 import {
-  mdiAccountMultiple,
-  mdiCartOutline,
   mdiChartTimelineVariant,
-  mdiMonitorCellphone,
-  mdiReload,
-  mdiGithub,
-  mdiChartPie,
+  mdiUpload,
+  mdiCheckCircleOutline,
+  mdiCloseCircleOutline,
+  mdiAlertCircleOutline,
+  mdiClockAlertOutline,
+  mdiAccessPoint,
 } from "@mdi/js";
-import * as chartConfig from "@/Components/Charts/chart.config.js";
-import LineChart from "@/Components/Charts/LineChart.vue";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
 import CardBox from "@/Components/CardBox.vue";
-import TableSampleClients from "@/Components/TableSampleClients.vue";
-import BaseButton from "@/Components/BaseButton.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.vue";
 import { Head } from '@inertiajs/inertia-vue3';
+import TableDeviceListHome from '@/Components/TableDeviceListHome.vue';
+import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
 
 const props = defineProps({
-  user: Object,
+  uplinks: {
+    type: Array,
+    required: true,
+  },
 });
 
-const chartData = ref(null);
-
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData();
+const deviceStatusColor = (status) => {
+  if (status === "danger") {
+    return "text-red-500";
+  }
+  if (status === "inactive") {
+    return "text-gray-600 dark:text-slate-500";
+  }
+  if (status === "maintenance") {
+    return "text-yellow-500";
+  }
+  if (status === "active") {
+    return "text-emerald-500";
+  }
 };
 
-onMounted(() => {
-  fillChartData();
-});
+const deviceStatusIcon = (status) => {
+  if (status === "danger") {
+    return mdiAlertCircleOutline;
+  }
+  if (status === "inactive") {
+    return mdiCloseCircleOutline
+  }
+  if (status === "maintenance") {
+    return mdiClockAlertOutline;
+  }
+  if (status === "active") {
+    return mdiCheckCircleOutline
+  }
+};
 
 </script>
 
 <template>
-  <LayoutAuthenticated :user='props.user'>
+  <LayoutAuthenticated>
+
     <Head title="Dashboard" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        <BaseButton href="https://github.com/justboil/admin-one-vue-tailwind" target="_blank" :icon="mdiGithub"
-          label="Star on GitHub" color="contrast" rounded-full small />
+        <!-- <BaseButton href="#" target="_blank" :icon="mdiGithub" label="GitHub" color="contrast" rounded-full small /> -->
       </SectionTitleLineWithButton>
-
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget trend="12%" trend-type="up" color="text-emerald-500" :icon="mdiAccountMultiple" :number="512"
-          label="Clients" />
-        <CardBoxWidget trend="12%" trend-type="down" color="text-blue-500" :icon="mdiCartOutline" :number="7770"
-          prefix="$" label="Sales" />
-        <CardBoxWidget trend="Overflow" trend-type="alert" color="text-red-500" :icon="mdiChartTimelineVariant"
-          :number="256" suffix="%" label="Performance" />
+      <div class="grid grid-cols-2 gap-6 lg:grid-cols-3 mb-6">
+        <CardBoxWidget v-for="device in $page.props.devices" :key="device.id" :number="100" :trend="device.status"
+          :trend-type="device.status" :label="device.name ?? device.device_id" :color="deviceStatusColor(device.status)"
+          :icon="deviceStatusIcon(device.status)" :last-seen="device.last_payload_at" />
       </div>
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-        <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
-      </SectionTitleLineWithButton>
-
-      <CardBox class="mb-6">
-        <div v-if="chartData">
-          <line-chart :data="chartData" class="h-96" />
-        </div>
-      </CardBox>
-
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
-      <CardBox has-tablen>
-        <!-- pass users as data to tablesampleclients -->
-        <TableSampleClients :data="props.user" />
+      <SectionTitleLineWithButton :icon="mdiUpload" title="6 Latest Uplinks" />
+      <CardBox has-table>
+        <TableUplinkListHome :uplinks-data="uplinks" />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

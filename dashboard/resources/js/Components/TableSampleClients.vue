@@ -11,7 +11,6 @@ import axios from 'axios';
 
 const props = defineProps({
   checkable: Boolean,
-  data: Array,
 });
 
 // fetch items need to change the source
@@ -24,7 +23,7 @@ const isModalActive = ref(false);
 
 const isModalDangerActive = ref(false);
 
-const perPage = ref(5);
+const perPage = ref(3);
 
 const currentPage = ref(0);
 
