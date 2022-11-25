@@ -4,7 +4,7 @@ import InputError from '@/Components/Breeze/InputError.vue';
 import InputLabel from '@/Components/Breeze/InputLabel.vue';
 import PrimaryButton from '@/Components/Breeze/PrimaryButton.vue';
 import TextInput from '@/Components/Breeze/TextInput.vue';
-import { Head, useForm } from '@inertiajs/Breeze/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     email: String,

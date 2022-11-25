@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->timestampTz('latest_payload_at')->nullable()->default(now());
+            $table->enum('status', ['danger', 'inactive', 'onrepair', 'active'])->default('active');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->dropColumn('last_uplink_at');
+            $table->dropColumn('status');
         });
     }
 };

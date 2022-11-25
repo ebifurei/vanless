@@ -1,7 +1,6 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/Stores/main.js";
@@ -13,16 +12,12 @@ import NavBarItemPlain from "@/Components/NavBarItemPlain.vue";
 import AsideMenu from "@/Components/AsideMenu.vue";
 import FooterBar from "@/Components/FooterBar.vue";
 import { Inertia } from "@inertiajs/inertia";
-
-const props = defineProps({
-  user: Object,
-});
+import { usePage } from "@inertiajs/inertia-vue3";
 
 useMainStore().setUser({
-  name: props.user.name,
-  email: props.user.email,
-  avatar:
-    "https://avatars.dicebear.com/api/avataaars/" + props.user.name.replace(/[^a-z0-9]+/i, "-") + ".svg",
+  name: usePage().props.value.auth.user.name,
+  email: usePage().props.value.auth.user.email,
+  avatar: "https://avatars.dicebear.com/api/avataaars/" + usePage().props.value.auth.user.name.replace(/[^a-z0-9]+/i, "-") + ".svg",
 });
 
 const layoutAsidePadding = "xl:pl-60";
@@ -72,10 +67,7 @@ const menuClick = (event, item) => {
       <AsideMenu :is-aside-mobile-expanded="isAsideMobileExpanded" :is-aside-lg-active="isAsideLgActive"
         :menu="menuAside" @menu-click="menuClick" @aside-lg-close-click="isAsideLgActive = false" />
       <slot />
-      <FooterBar>
-        Get more with
-        <a href="https://tailwind-vue.justboil.me/" target="_blank" class="text-blue-600">Premium version</a>
-      </FooterBar>
+      <FooterBar />
     </div>
   </div>
 </template>
