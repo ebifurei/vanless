@@ -1,9 +1,8 @@
 <script setup>
 import { mdiEye, mdiGoogleMaps, mdiMarker, mdiTrashCan } from '@mdi/js';
-import BaseButton from './BaseButton.vue';
-import BaseButtons from './BaseButtons.vue';
-import PillTagTrend from './PillTagTrend.vue';
-import UserAvatar from './UserAvatar.vue';
+import BaseButton from '@/Components/BaseButton.vue';
+import PillTagTrend from '@/Components/PillTagTrend.vue';
+import UserAvatar from '@/Components/UserAvatar.vue';
 
 const props = defineProps({
   deviceList: {
@@ -14,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="overflow-auto rounded-lg shadow dark:shadow-gray-300">
+  <div class="overflow-auto rounded-lg shadow dark:shadow-gray-500">
     <table class="w-full'">
       <thead>
         <tr>

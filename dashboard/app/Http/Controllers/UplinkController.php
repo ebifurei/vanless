@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UplinkResource;
 use App\Mappers\ChirpstackUplinkMapper;
 use App\Mappers\UplinkMapperInterface;
 use App\Models\Device;
@@ -13,10 +14,9 @@ class UplinkController extends Controller
 {
     public function index()
     {
-        $uplinks = Uplink::with('device')->latest()->paginate(10);
-
+        // return inertial Uplink/Index or if theres a request, return json
         return Inertia::render('Uplink/Index', [
-            'uplinks' => $uplinks,
+            'uplinks' => Uplink::latest()->paginate(6),
         ]);
     }
 

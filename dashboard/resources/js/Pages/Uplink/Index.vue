@@ -7,7 +7,7 @@
         <!--  -->
       </SectionTitleLineWithButton>
 
-      <TableUplinkList :uplinks="uplinks" />
+      <TableUplinkList :uplinksData="uplinks" />
 
     </SectionMain>
   </LayoutAuthenticated>
@@ -19,8 +19,8 @@ import { Head } from '@inertiajs/inertia-vue3';
 import SectionMain from '@/Components/SectionMain.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
 import TableUplinkList from '@/Components/TableUplinkList.vue';
-import { defineProps } from 'vue';
 import { mdiLinkVariant } from '@mdi/js';
+import { defineProps } from 'vue';
 
 const props = defineProps({
   uplinks: {
