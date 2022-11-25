@@ -1,11 +1,10 @@
 <script setup>
 import UserAvatar from '@/Components/UserAvatar.vue';
 import { defineProps } from 'vue';
-import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
   uplinksData: {
-    type: Object,
+    type: Array,
     required: true,
   },
 });
@@ -20,15 +19,13 @@ const props = defineProps({
           <tr>
             <th class="lg:hidden" />
             <th>Port</th>
-            <th>Device-id</th>
+            <th>Device name</th>
             <th>Date</th>
-            <th>Payloads</th>
             <th>Time</th>
-            <th />
           </tr>
         </thead>
         <tbody>
-          <tr v-for="uplink in uplinksData.data" :key="uplink.id">
+          <tr v-for="uplink in uplinksData" :key="uplink.id">
             <td class="lg:hidden">
               <UserAvatar :username="uplink.device_id" :api="'initials'" :font-size="40"
                 class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
@@ -36,26 +33,19 @@ const props = defineProps({
             <td data-label="Port">
               {{ uplink.port }}
             </td>
-            <td data-label="Device ID">
+            <td data-label="Device Name">
               {{ uplink.device_id }}
             </td>
             <td data-label="Date">
               {{ uplink.date }}
             </td>
-            <td data-label="Payloads">
-              <div class="overflow-auto">
-                {{ uplink.payloads }}
-              </div>
-            </td>
-            <td data-label="Payloads at">
-              {{ uplink.created_at }}
+            <td data-label="Time">
+              {{ uplink.time }}
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <Pagination class="mt-6" :links="uplinksData.links" />
   </div>
 </template>
 

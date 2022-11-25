@@ -17,7 +17,7 @@ const props = defineProps({
     <table class="w-full'">
       <thead>
         <tr>
-          <th />
+          <th class="lg:hidden" />
           <th>Status</th>
           <th>Name</th>
           <th>Device_id</th>
@@ -31,7 +31,7 @@ const props = defineProps({
       </thead>
       <tbody>
         <tr v-for="device in deviceList" :key="device.id">
-          <td>
+          <td class="lg:hidden">
             <UserAvatar :username="device.device_id" :api="'initials'" :status="device.status" :font-size="40"
               class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
           </td>

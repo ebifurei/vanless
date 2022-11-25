@@ -14,9 +14,10 @@ class UplinkController extends Controller
 {
     public function index()
     {
-        // return inertial Uplink/Index or if theres a request, return json
         return Inertia::render('Uplink/Index', [
-            'uplinks' => Uplink::latest()->paginate(6),
+            'uplinks' => Uplink::latest()->paginate(6)
+                ->withQueryString()
+                ->through(fn ($uplink) => new UplinkResource($uplink)),
         ]);
     }
 

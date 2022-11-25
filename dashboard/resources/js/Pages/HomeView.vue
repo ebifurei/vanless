@@ -1,21 +1,28 @@
 <script setup>
 import {
   mdiChartTimelineVariant,
-  mdiGithub,
   mdiUpload,
   mdiCheckCircleOutline,
   mdiCloseCircleOutline,
   mdiAlertCircleOutline,
   mdiClockAlertOutline,
+  mdiAccessPoint,
 } from "@mdi/js";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
 import CardBox from "@/Components/CardBox.vue";
-import BaseButton from "@/Components/BaseButton.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.vue";
 import { Head } from '@inertiajs/inertia-vue3';
 import TableDeviceListHome from '@/Components/TableDeviceListHome.vue';
+import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
+
+const props = defineProps({
+  uplinks: {
+    type: Array,
+    required: true,
+  },
+});
 
 const deviceStatusColor = (status) => {
   if (status === "danger") {
@@ -51,6 +58,7 @@ const deviceStatusIcon = (status) => {
 
 <template>
   <LayoutAuthenticated>
+
     <Head title="Dashboard" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
@@ -61,10 +69,9 @@ const deviceStatusIcon = (status) => {
           :trend-type="device.status" :label="device.name ?? device.device_id" :color="deviceStatusColor(device.status)"
           :icon="deviceStatusIcon(device.status)" :last-seen="device.last_payload_at" />
       </div>
-
-      <SectionTitleLineWithButton :icon="mdiUpload" title="Latest Uplinks" />
+      <SectionTitleLineWithButton :icon="mdiUpload" title="6 Latest Uplinks" />
       <CardBox has-table>
-        <TableDeviceListHome />
+        <TableUplinkListHome :uplinks-data="uplinks" />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

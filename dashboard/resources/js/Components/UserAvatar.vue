@@ -42,6 +42,7 @@ const statusColor = computed(() => {
   if (props.status === "active") {
     return "%2310b981";
   }
+  return "%2300b0f0";
 });
 
 const avatar = computed(
@@ -58,11 +59,8 @@ const username = computed(() => props.username);
 
 <template>
   <div>
-    <img
-      :src="avatar"
-      :alt="username"
-      class="rounded-full block h-auto w-full max-w-full bg-gray-100 dark:bg-slate-800"
-    />
+    <img :src="avatar" :alt="username"
+      class="rounded-full block h-auto w-full max-w-full bg-gray-100 dark:bg-slate-800" />
     <slot />
   </div>
 </template>
