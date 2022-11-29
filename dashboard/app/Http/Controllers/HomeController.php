@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $uplinks = Uplink::latest()->select('id', 'device_id', 'date', 'port', 'created_at')
-            ->limit(6)
+            ->limit(4)
             ->get()
             ->map(function ($uplink) {
                 return [

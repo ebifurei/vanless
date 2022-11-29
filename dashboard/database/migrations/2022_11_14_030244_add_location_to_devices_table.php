@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('devices', function (Blueprint $table) {
             $table->string('address')->nullable();
-            $table->decimal('longitude', 8, 6)->nullable();
-            $table->decimal('latitude', 9, 6)->nullable();
+            $table->decimal('latitude', 8, 6)->nullable();
+            $table->decimal('longitude', 9, 6)->nullable();
         });
     }
 

@@ -17,7 +17,6 @@ import Pagination from '@/Components/Pagination.vue';
             <th>Date</th>
             <th>Payloads</th>
             <th>Time</th>
-            <th />
           </tr>
         </thead>
         <tbody>

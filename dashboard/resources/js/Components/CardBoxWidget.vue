@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch } from "vue";
-import { mdiCog } from "@mdi/js";
+import { mdiAlertCircleOutline, mdiCheckCircleOutline, mdiClockAlertOutline, mdiCloseCircleOutline, mdiCog } from "@mdi/js";
 import CardBox from "@/Components/CardBox.vue";
 import NumberDynamic from "@/Components/NumberDynamic.vue";
 import BaseIcon from "@/Components/BaseIcon.vue";
@@ -48,14 +48,49 @@ defineProps({
     type: String,
     default: 'now',
   },
+  config: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const deviceStatusColor = (status) => {
+  if (status === "danger") {
+    return "text-red-500";
+  }
+  if (status === "inactive") {
+    return "text-gray-600 dark:text-slate-500";
+  }
+  if (status === "maintenance") {
+    return "text-yellow-500";
+  }
+  if (status === "active") {
+    return "text-emerald-500";
+  }
+};
+
+const deviceStatusIcon = (status) => {
+  if (status === "danger") {
+    return mdiAlertCircleOutline;
+  }
+  if (status === "inactive") {
+    return mdiCloseCircleOutline;
+  }
+  if (status === "maintenance") {
+    return mdiClockAlertOutline;
+  }
+  if (status === "active") {
+    return mdiCheckCircleOutline;
+  }
+};
 </script>
 
 <template>
   <CardBox>
     <BaseLevel v-if="trend" class="mb-3" mobile>
       <PillTagTrend :trend="trend" :trend-type="trendType" small />
-      <BaseButton :icon="mdiCog" icon-w="w-4" icon-h="h-4" color="lightDark" small @click="isModalActive = true" />
+      <BaseButton v-if="config" :icon="mdiCog" icon-w="w-4" icon-h="h-4" color="lightDark" small
+        @click="isModalActive = true" />
     </BaseLevel>
     <BaseLevel mobile>
       <div>
@@ -72,11 +107,11 @@ defineProps({
           Last seen : {{ lastSeen }}
         </h3>
       </div>
-      <BaseIcon v-if="icon" :path="icon" size="75" w="" h="h-16" :class="color" />
+      <BaseIcon v-if="icon" :path="deviceStatusIcon(icon)" size="75" w="" h="h-16" :class="deviceStatusColor(color)" />
     </BaseLevel>
   </CardBox>
-<CardBoxModal v-model="isModalActive" title="Sample modal">
-  <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-  <p>This is sample modal</p>
-</CardBoxModal>
+  <CardBoxModal v-model="isModalActive" title="Sample modal">
+    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+    <p>This is sample modal</p>
+  </CardBoxModal>
 </template>

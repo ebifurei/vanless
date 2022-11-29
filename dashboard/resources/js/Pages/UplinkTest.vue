@@ -20,7 +20,7 @@ export default {
         // data to send
         applicationID: '1',
         applicationName: 'LoraAntiVandalisme',
-        deviceName: 'vanless-5',
+        deviceName: 'vanless-1',
         devEUI: 'vVnh4aKO7Ho=',
         rxInfo: [
           {
