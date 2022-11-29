@@ -10,8 +10,29 @@
         mapTypeId="terrain">
         <Marker v-for="l in devices" :key="l.id" :options="{ position: getPosition(l), icon: getIcon(l) }">
           <InfoWindow>
-            <CardBoxWidget :number="100" :trend="l.status" :trend-type="l.status" :label="l.name ?? l.device_id"
-              :color="l.status" :icon="l.status" :last-seen="l.last_payload_at" />
+            <!-- name, address, description, status with pilltagtrend  -->
+            <div class="flex flex-col dark:text-black">
+              <div class="flex flex-row">
+                <div class="flex flex-col">
+                  <div class="font-bold text-lg ">
+                    {{ l.name ?? l.device_id }}
+                  </div>
+                  <div class="text-sm">{{ l.address ?? 'No Address yet' }}</div>
+                  <div class="text-sm">{{ l.description ?? 'No Description yet' }}</div>
+                </div>
+                <div class="flex flex-col ml-2">
+                  <BaseLevelVue>
+                    <PillTagTrend :trend="l.status" :trend-type="l.status" />
+                  </BaseLevelVue>
+                </div>
+              </div>
+              <div class="flex flex-row mt-2">
+                <div class="flex flex-col ml-2">
+                  <div class="font-bold">Last Seen</div>
+                  <div class="text-sm">{{ l.last_payload_at }}</div>
+                </div>
+              </div>
+            </div>
           </InfoWindow>
         </Marker>
       </GoogleMap>
@@ -30,6 +51,7 @@ import { usePage } from '@inertiajs/inertia-vue3';
 import { computed } from 'vue';
 import CardBox from '@/Components/CardBox.vue';
 import CardBoxWidget from '@/Components/CardBoxWidget.vue';
+import PillTagTrend from '@/Components/PillTagTrend.vue';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
