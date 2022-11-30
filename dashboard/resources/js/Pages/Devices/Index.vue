@@ -6,7 +6,6 @@
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Devices List" main>
         <!--  -->
       </SectionTitleLineWithButton>
-
       <TableDeviceList />
     </SectionMain>
   </LayoutAuthenticated>

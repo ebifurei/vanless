@@ -3,6 +3,51 @@ import { mdiMarker, mdiGoogleMaps, mdiTrashCan } from '@mdi/js';
 import BaseButton from '@/Components/BaseButton.vue';
 import PillTagTrend from '@/Components/PillTagTrend.vue';
 import UserAvatar from '@/Components/UserAvatar.vue';
+import CardBoxModal from './CardBoxModal.vue';
+import { ref, watch } from 'vue';
+import { GoogleMap, InfoWindow, Marker } from 'vue3-google-map';
+
+const selectedDevice = ref(null);
+const isMapModalActive = ref(false);
+
+const handleMapClick = (device) => {
+  selectedDevice.value = device;
+  isMapModalActive.value = true;
+};
+
+const getIcon = ref(null);
+const getLocation = ref({
+  lat: 0,
+  lng: 0
+});
+
+
+watch(selectedDevice, (device) => {
+  if (device) {
+    getLocation.value = {
+      lat: parseFloat(device.latitude),
+      lng: parseFloat(device.longitude)
+    };
+    switch (device.status) {
+      case 'active':
+        getIcon.value = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        break;
+      case 'danger':
+        getIcon.value = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        break;
+      case 'onrepair':
+        getIcon.value = 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+        break;
+      case 'inactive':
+        getIcon.value = 'https://maps.google.com/mapfiles/ms/icons/ltblue-dot.png';
+        break;
+    }
+  }
+});
+
+// const showMap = (e) => {
+//   window.open(`https://www.google.com/maps/search/?api=1&query=${e.latitude},${e.longitude}`, '_blank');
+// };
 
 </script>
 
@@ -63,12 +108,38 @@ import UserAvatar from '@/Components/UserAvatar.vue';
             <div class="space-x-1">
               <BaseButton :icon="mdiMarker" />
               <BaseButton :icon="mdiTrashCan" />
-              <BaseButton :icon="mdiGoogleMaps" />
+              <BaseButton :icon="mdiGoogleMaps" @click="handleMapClick(device)" />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <!-- MAP MODAL -->
+    <CardBoxModal v-if="selectedDevice" v-model="isMapModalActive" title="Location" noFooter>
+      <GoogleMap api-key="AIzaSyBSYeq6KGh50JimKgTwIQ5PM_EKSmuUlos" style="width: 100%; height: 250px"
+        :center="getLocation" :zoom="16">
+        <Marker :options="{ position: getLocation, icon: getIcon }">
+          <InfoWindow v-if="selectedDevice">
+            {{ selectedDevice.device_id }}
+          </InfoWindow>
+        </Marker>
+      </GoogleMap>
+      <!-- device name and address and open with google map -->
+      <div class="flex flex-col items-center justify-center">
+        <div class="text-xl">
+          {{ selectedDevice.name ?? selectedDevice.device_id }}
+        </div>
+        <div class="text-sm">
+          {{ selectedDevice.address ?? "No address" }}
+        </div>
+        <div class="text-sm">
+          <a :href="`https://www.google.com/maps/search/?api=1&query=${selectedDevice.latitude},${selectedDevice.longitude}`"
+            target="_blank">Open with Google Map</a>
+        </div>
+      </div>
+    </CardBoxModal>
+    <!-- END MAP MODAL -->
+
   </div>
 </template>
 

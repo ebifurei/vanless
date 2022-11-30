@@ -19,6 +19,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -28,9 +29,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/form', function () {
+    return Inertia::render('FormsView');
+});
+
 Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // send uplink to chirpstack if visit /uplink/test
 Route::get('/uplink/test', function () {
