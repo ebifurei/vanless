@@ -219,9 +219,9 @@ watch(darkMode, (val) => {
           </td>
           <td data-label="Actions">
             <div class="space-x-1">
-              <BaseButton :icon="mdiMarker" />
+              <BaseButton :icon="mdiMarker" title="Edit devices" />
               <BaseButton :icon="mdiTrashCan" />
-              <BaseButton :icon="mdiGoogleMaps" @click="handleMapClick(device)" />
+              <BaseButton :icon="mdiGoogleMaps" @click="handleMapClick(device)" title="Show Location" />
             </div>
           </td>
         </tr>
