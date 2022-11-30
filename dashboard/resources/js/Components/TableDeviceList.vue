@@ -4,9 +4,12 @@ import BaseButton from '@/Components/BaseButton.vue';
 import PillTagTrend from '@/Components/PillTagTrend.vue';
 import UserAvatar from '@/Components/UserAvatar.vue';
 import CardBoxModal from './CardBoxModal.vue';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { GoogleMap, InfoWindow, Marker } from 'vue3-google-map';
+import { useStyleStore } from '@/Stores/style';
+import { storeToRefs } from 'pinia';
 
+const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const selectedDevice = ref(null);
 const isMapModalActive = ref(false);
 
@@ -20,7 +23,6 @@ const getLocation = ref({
   lat: 0,
   lng: 0
 });
-
 
 watch(selectedDevice, (device) => {
   if (device) {
@@ -45,10 +47,121 @@ watch(selectedDevice, (device) => {
   }
 });
 
-// const showMap = (e) => {
-//   window.open(`https://www.google.com/maps/search/?api=1&query=${e.latitude},${e.longitude}`, '_blank');
-// };
+const state = storeToRefs(useStyleStore());
+const darkMode = state.darkMode;
 
+// MAP THEME
+const theme = ref();
+const day = [
+  {
+    featureType: "poi.business",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "transit",
+    elementType: "labels.icon",
+    stylers: [{ visibility: "off" }],
+  },
+];
+const night = [
+  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+  {
+    featureType: "administrative.locality",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#d59563" }],
+  },
+  {
+    featureType: "poi",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#d59563" }],
+  },
+  {
+    featureType: "poi.business",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "poi.park",
+    elementType: "geometry",
+    stylers: [{ color: "#263c3f" }],
+  },
+  {
+    featureType: "poi.park",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#6b9a76" }],
+  },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [{ color: "#38414e" }],
+  },
+  {
+    featureType: "road",
+    elementType: "geometry.stroke",
+    stylers: [{ color: "#212a37" }],
+  },
+  {
+    featureType: "road",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#9ca5b3" }],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "geometry",
+    stylers: [{ color: "#746855" }],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "geometry.stroke",
+    stylers: [{ color: "#1f2835" }],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#f3d19c" }],
+  },
+  {
+    featureType: "transit",
+    elementType: "labels.icon",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "transit.station",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#d59563" }],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [{ color: "#17263c" }],
+  },
+  {
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#515c6d" }],
+  },
+  {
+    featureType: "water",
+    elementType: "labels.text.stroke",
+    stylers: [{ color: "#17263c" }],
+  },
+];
+onMounted(() => {
+  if (darkMode.value) {
+    theme.value = night;
+  } else {
+    theme.value = day;
+  }
+});
+watch(darkMode, (val) => {
+  if (val) {
+    theme.value = night;
+  } else {
+    theme.value = day;
+  }
+});
+// END MAP THEME
 </script>
 
 <template>
@@ -116,8 +229,8 @@ watch(selectedDevice, (device) => {
     </table>
     <!-- MAP MODAL -->
     <CardBoxModal v-if="selectedDevice" v-model="isMapModalActive" title="Location" noFooter>
-      <GoogleMap api-key="AIzaSyBSYeq6KGh50JimKgTwIQ5PM_EKSmuUlos" style="width: 100%; height: 250px"
-        :center="getLocation" :zoom="16">
+      <GoogleMap :api-key="googleAPI" style="width: 100%; height: 250px" :center="getLocation" :zoom="18"
+        :street-view-control="false" :disable-default-ui="true" :styles="theme">
         <Marker :options="{ position: getLocation, icon: getIcon }">
           <InfoWindow v-if="selectedDevice">
             {{ selectedDevice.device_id }}
