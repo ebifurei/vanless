@@ -21,7 +21,7 @@ export default [
     label: "Dashboard",
   },
   {
-    route: "devices.index",
+    route: "device.index",
     label: "Devices Table",
     icon: mdiTable,
   },

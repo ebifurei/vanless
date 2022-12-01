@@ -1,6 +1,6 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/Stores/main.js";
@@ -41,6 +41,11 @@ const menuClick = (event, item) => {
     Inertia.post(route('logout'))
   }
 };
+
+onMounted(() => {
+  styleStore.setMapStyle();
+});
+
 </script>
 
 <template>

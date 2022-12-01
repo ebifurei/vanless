@@ -12,7 +12,6 @@ class UplinkFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-
     /** @test */
     public function it_can_store_chirpstack_uplink()
     {
@@ -22,19 +21,13 @@ class UplinkFeatureTest extends TestCase
             'event' => 'up'
         ]), $uplink);
 
-        // response data base has device_id in uplinks table
         $this->assertDatabaseHas('uplinks', [
-            'device_id' => $uplink['deviceName']
-        ]);
-
-        // response data base has device_id in devices table
-        $this->assertDatabaseHas('devices', [
             'device_id' => $uplink['deviceName']
         ]);
     }
 
     /** @test */
-    public function it_can_store_chirpstack_uplink_with_latest_payload()
+    public function it_can_store_chirpstack_uplink_and_make_a_new_device()
     {
         $uplink = $this->generateChirpstackUplink();
 
@@ -42,19 +35,8 @@ class UplinkFeatureTest extends TestCase
             'event' => 'up'
         ]), $uplink);
 
-        // response data base has device_id in uplinks table
-        $this->assertDatabaseHas('uplinks', [
-            'device_id' => $uplink['deviceName']
-        ]);
-
-        // response data base has device_id in devices table
         $this->assertDatabaseHas('devices', [
             'device_id' => $uplink['deviceName']
-        ]);
-
-        // response data base has latest_payload in devices table
-        $this->assertDatabaseHas('devices', [
-            'latest_payload' => json_encode($uplink['objectFields'])
         ]);
     }
 }

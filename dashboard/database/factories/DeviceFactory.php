@@ -23,10 +23,9 @@ class DeviceFactory extends Factory
                 "",
                 $this->faker->randomElements([1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'a', 'b', 'c', 'd', 'e', 'f'], 16, true)
             ),
-            'timezone' => $this->faker->timezone,
-            'custom_attributes' => [
-                'foo' => 'bar'
-            ]
+            'address' => $this->faker->address,
+            'latitude' => $this->faker->latitude,
+            'longitude' => $this->faker->longitude,
         ];
     }
 }

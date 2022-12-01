@@ -1,17 +1,20 @@
 <script setup>
-import { mdiMarker, mdiGoogleMaps, mdiTrashCan } from '@mdi/js';
+import { mdiMarker, mdiGoogleMaps, mdiTrashCan, mdiMapMarker } from '@mdi/js';
 import BaseButton from '@/Components/BaseButton.vue';
 import PillTagTrend from '@/Components/PillTagTrend.vue';
 import UserAvatar from '@/Components/UserAvatar.vue';
-import CardBoxModal from './CardBoxModal.vue';
-import { ref, watch, onMounted } from 'vue';
+import CardBoxModal from '@/Components/CardBoxModal.vue';
+import { ref, watch } from 'vue';
 import { GoogleMap, InfoWindow, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';
 import { storeToRefs } from 'pinia';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const selectedDevice = ref(null);
 const isMapModalActive = ref(false);
+const state = storeToRefs(useStyleStore());
+const mapStyle = state.mapStyle;
 
 const handleMapClick = (device) => {
   selectedDevice.value = device;
@@ -47,121 +50,6 @@ watch(selectedDevice, (device) => {
   }
 });
 
-const state = storeToRefs(useStyleStore());
-const darkMode = state.darkMode;
-
-// MAP THEME
-const theme = ref();
-const day = [
-  {
-    featureType: "poi.business",
-    stylers: [{ visibility: "off" }],
-  },
-  {
-    featureType: "transit",
-    elementType: "labels.icon",
-    stylers: [{ visibility: "off" }],
-  },
-];
-const night = [
-  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-  {
-    featureType: "administrative.locality",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
-  },
-  {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
-  },
-  {
-    featureType: "poi.business",
-    stylers: [{ visibility: "off" }],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "geometry",
-    stylers: [{ color: "#263c3f" }],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#6b9a76" }],
-  },
-  {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [{ color: "#38414e" }],
-  },
-  {
-    featureType: "road",
-    elementType: "geometry.stroke",
-    stylers: [{ color: "#212a37" }],
-  },
-  {
-    featureType: "road",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#9ca5b3" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [{ color: "#746855" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [{ color: "#1f2835" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#f3d19c" }],
-  },
-  {
-    featureType: "transit",
-    elementType: "labels.icon",
-    stylers: [{ visibility: "off" }],
-  },
-  {
-    featureType: "transit.station",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
-  },
-  {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [{ color: "#17263c" }],
-  },
-  {
-    featureType: "water",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#515c6d" }],
-  },
-  {
-    featureType: "water",
-    elementType: "labels.text.stroke",
-    stylers: [{ color: "#17263c" }],
-  },
-];
-onMounted(() => {
-  if (darkMode.value) {
-    theme.value = night;
-  } else {
-    theme.value = day;
-  }
-});
-watch(darkMode, (val) => {
-  if (val) {
-    theme.value = night;
-  } else {
-    theme.value = day;
-  }
-});
-// END MAP THEME
 </script>
 
 <template>
@@ -191,7 +79,10 @@ watch(darkMode, (val) => {
             <PillTagTrend :trend="device.status" :trend-type="device.status" />
           </td>
           <td data-label="Name">
-            {{ device.device_name ?? device.device_id }}
+            <!-- Clickable name that route to device.show -->
+            <Link :href="route('device.show', device.id)" class="text-blue-500 hover:text-blue-600">
+            {{ device.name ?? device.device_id }}
+            </Link>
           </td>
           <td data-label="Device ID">
             {{ device.device_id }}
@@ -229,15 +120,22 @@ watch(darkMode, (val) => {
     </table>
     <!-- MAP MODAL -->
     <CardBoxModal v-if="selectedDevice" v-model="isMapModalActive" title="Location" noFooter>
-      <GoogleMap :api-key="googleAPI" style="width: 100%; height: 250px" :center="getLocation" :zoom="18"
-        :street-view-control="false" :disable-default-ui="true" :styles="theme">
+      <GoogleMap v-if="selectedDevice.latitude" :api-key="googleAPI" style="width: 100%; height: 250px"
+        :center="getLocation" :zoom="18" :street-view-control="false" :disable-default-ui="true" :styles="mapStyle">
         <Marker :options="{ position: getLocation, icon: getIcon }">
           <InfoWindow v-if="selectedDevice">
             {{ selectedDevice.device_id }}
           </InfoWindow>
         </Marker>
       </GoogleMap>
-      <!-- device name and address and open with google map -->
+      <!-- there no map selected  -->
+      <div v-else class="flex flex-col items-center justify-center h-64">
+        <div class="flex items-center justify-center mb-3">
+          <BaseButton class="border-slate-600 dark:border-slate-400" :icon="mdiMapMarker" :icon-size="60" color="light"
+            rounded-full />
+        </div>
+        <p class="text-sm font-medium" color="contrast">Theres no Map</p>
+      </div>
       <div class="flex flex-col items-center justify-center">
         <div class="text-xl">
           {{ selectedDevice.name ?? selectedDevice.device_id }}
