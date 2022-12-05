@@ -71,7 +71,7 @@ class DeviceController extends Controller
 
         $device->update($request->all());
 
-        return redirect()->route('devices.index')
+        return redirect()->route('device.index')
             ->with('success', 'Device updated successfully');
     }
 
@@ -79,7 +79,7 @@ class DeviceController extends Controller
     {
         $device->delete();
 
-        return redirect()->route('devices.index')
+        return redirect()->route('device.index')
             ->with('success', 'Device deleted successfully');
     }
 

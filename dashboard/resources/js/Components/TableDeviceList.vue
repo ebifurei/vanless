@@ -110,7 +110,9 @@ watch(selectedDevice, (device) => {
           </td>
           <td data-label="Actions">
             <div class="space-x-1">
+              <Link :href="route('device.edit', device.id)">
               <BaseButton :icon="mdiMarker" title="Edit devices" />
+              </Link>
               <BaseButton :icon="mdiTrashCan" />
               <BaseButton :icon="mdiGoogleMaps" @click="handleMapClick(device)" title="Show Location" />
             </div>
