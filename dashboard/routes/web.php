@@ -20,22 +20,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/a', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
 Route::get('/', function () {
     return Inertia::render('StyleView');
 })->name('style');
-
-Route::get('/form', function () {
-    return Inertia::render('FormsView');
-});
 
 Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
