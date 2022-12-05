@@ -34,8 +34,8 @@
             <BaseButton type="button" color="light" label="Reset location" @click="resetLocation"
               class="p-0 dark:border-slate-600" />
           </div>
-          <GoogleMap :apiKey="googleAPI" :center="{ lat: form.latitude, lng: form.longitude }" :zoom="17"
-            style="width: 100%; height: 400px" :streetViewControl="false" @click="mapClick" :styles="mapStyle">
+          <GoogleMap :apiKey="googleAPI" :center="getCenter" :zoom="16" style="width: 100%; height: 400px"
+            :streetViewControl="false" @click="mapClick" :styles="mapStyle">
             <Marker v-if="form.latitude" :options="{
               position: { lat: form.latitude, lng: form.longitude },
               icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
@@ -122,6 +122,13 @@ const resetLocation = () => {
   form.latitude = parseFloat(device.value.latitude);
   form.longitude = parseFloat(device.value.longitude);
 };
+
+const getCenter = computed(() => {
+  if (form.latitude && form.longitude) {
+    return { lat: form.latitude, lng: form.longitude };
+  }
+  return { lat: -7.765411, lng: 110.372278 };
+});
 
 const deleteDevice = () => {
   form.delete(route('device.destroy', device.value.id), {
