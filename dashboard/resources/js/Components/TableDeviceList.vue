@@ -9,16 +9,26 @@ import { GoogleMap, InfoWindow, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';
 import { storeToRefs } from 'pinia';
 import { Link } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/inertia-vue3';
+import BaseButtons from '@/Components/BaseButtons.vue';
+import BaseDivider from '@/Components/BaseDivider.vue';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const selectedDevice = ref(null);
 const isMapModalActive = ref(false);
+const isDeleteModalActive = ref(false);
 const state = storeToRefs(useStyleStore());
 const mapStyle = state.mapStyle;
+const form = useForm()
 
 const handleMapClick = (device) => {
   selectedDevice.value = device;
   isMapModalActive.value = true;
+};
+
+const handleDeleteClick = (device) => {
+  selectedDevice.value = device;
+  isDeleteModalActive.value = true;
 };
 
 const getIcon = ref(null);
@@ -49,6 +59,18 @@ watch(selectedDevice, (device) => {
     }
   }
 });
+
+const handleDeleteConfirm = () => {
+  form.delete(route('device.destroy', selectedDevice.value.id), {
+    preserveState: true,
+    onSuccess: () => {
+      // close modal
+      isDeleteModalActive.value = false;
+      // reset selected device
+      selectedDevice.value = null;
+    }
+  });
+};
 
 </script>
 
@@ -113,13 +135,26 @@ watch(selectedDevice, (device) => {
               <Link :href="route('device.edit', device.id)">
               <BaseButton :icon="mdiMarker" title="Edit devices" />
               </Link>
-              <BaseButton :icon="mdiTrashCan" />
+              <BaseButton :icon="mdiTrashCan" title="Delete devices" @click="handleDeleteClick(device)" />
               <BaseButton :icon="mdiGoogleMaps" @click="handleMapClick(device)" title="Show Location" />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <!-- DELETE MODAL -->
+    <CardBoxModal v-if="selectedDevice" :title="`Delete ${selectedDevice.name ?? selectedDevice.device_id}`"
+      v-model="isDeleteModalActive" noFooter>
+
+      <p>Are you sure you want to delete this device?</p>
+
+      <BaseDivider />
+      <BaseButtons>
+        <BaseButton label="Delete" color="danger" @click="handleDeleteConfirm" :disabled="form.processing" />
+        <BaseButton label="Cancel" color="danger" outline @click="isDeleteModalActive = false" />
+      </BaseButtons>
+    </CardBoxModal>
+    <!-- END DELETE MODAL -->
     <!-- MAP MODAL -->
     <CardBoxModal v-if="selectedDevice" v-model="isMapModalActive" title="Location" noFooter>
       <GoogleMap v-if="selectedDevice.latitude" :api-key="googleAPI" style="width: 100%; height: 250px"

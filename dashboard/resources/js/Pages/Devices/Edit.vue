@@ -34,7 +34,7 @@
             <BaseButton type="button" color="light" label="Reset location" @click="resetLocation"
               class="p-0 dark:border-slate-600" />
           </div>
-          <GoogleMap :apiKey="googleAPI" :center="{ lat: form.latitude, lng: form.longitude }" :zoom="19"
+          <GoogleMap :apiKey="googleAPI" :center="{ lat: form.latitude, lng: form.longitude }" :zoom="17"
             style="width: 100%; height: 400px" :streetViewControl="false" @click="mapClick" :styles="mapStyle">
             <Marker v-if="form.latitude" :options="{
               position: { lat: form.latitude, lng: form.longitude },
@@ -45,19 +45,29 @@
             <BaseButtons>
               <BaseButton type="submit" color="info" label="Submit" :disabled="form.processing" />
               <BaseButton color="info" outline label="Reset" @click="reset" />
+              <BaseButton color="danger" outline label="Delete" @click="(isDeleteModalActive = true)" />
             </BaseButtons>
           </template>
         </CardBox>
       </form>
+      <CardBoxModal :title="`Delete ${form.name ?? form.device_id}`" v-model="isDeleteModalActive" noFooter>
+
+        <p>Are you sure you want to delete this device?</p>
+
+        <BaseDivider />
+        <BaseButtons>
+          <BaseButton label="Delete" color="danger" @click="deleteDevice" :disabled="form.processing" />
+          <BaseButton label="Cancel" color="danger" outline @click="isDeleteModalActive = false" />
+        </BaseButtons>
+      </CardBoxModal>
     </SectionMain>
   </LayoutAuthenticated>
 </template>
 
 <script setup>
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue';
-import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 import SectionMain from '@/Components/SectionMain.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
 import { mdiDevices, mdiAccount, mdiArrowLeft } from '@mdi/js';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
 import CardBox from '@/Components/CardBox.vue';
@@ -68,11 +78,14 @@ import FormField from '@/Components/FormField.vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import CardBoxModal from '@/Components/CardBoxModal.vue';
+import BaseDivider from '@/Components/BaseDivider.vue';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const state = storeToRefs(useStyleStore());
 const mapStyle = state.mapStyle;
+const isDeleteModalActive = ref(false);
 
 const device = computed(() => usePage().props.value.device);
 
@@ -108,6 +121,12 @@ const reset = () => {
 const resetLocation = () => {
   form.latitude = parseFloat(device.value.latitude);
   form.longitude = parseFloat(device.value.longitude);
+};
+
+const deleteDevice = () => {
+  form.delete(route('device.destroy', device.value.id), {
+    preserveScroll: true,
+  });
 };
 
 
