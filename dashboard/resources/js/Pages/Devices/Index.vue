@@ -25,6 +25,15 @@ import BaseButton from '@/Components/BaseButton.vue';
 
 </script>
 
-<style lang="scss" scoped>
+<style>
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px
+}
 
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  background: #6B7280;
+}
 </style>
