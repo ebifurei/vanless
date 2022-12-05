@@ -128,8 +128,8 @@
         <!-- END MAP -->
       </div>
 
-      <CardBox class="mt-10">
-        {{ $page.props.device.uplinks }}
+      <CardBox class="mt-10" hasTable>
+        <TableUplinkList :uplinks="uplinks" :links="links" />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>
@@ -148,6 +148,7 @@ import { GoogleMap, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';
 import { storeToRefs } from 'pinia';
 import PillTagTrend from '@/Components/PillTagTrend.vue';
+import TableUplinkList from '@/Components/TableUplinkList.vue';
 
 const device = computed(() => usePage().props.value.device);
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -173,6 +174,8 @@ const dateTime = (date) => {
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 };
 
+const uplinks = computed(() => usePage().props.value.uplinks.data);
+const links = computed(() => usePage().props.value.uplinks.links);
 
 
 </script>
