@@ -58,7 +58,7 @@
                   <td class="px-4 py-2 text-right">{{ device.latest_payload_at }}</td>
                 </tr>
                 <tr>
-                  <td class="font-semibold pr-3 text-left">Created at</td>
+                  <td class="font-semibold pr-3 text-left">Created At</td>
                   <td class="px-4 py-2 text-right">{{ dateTime(device.created_at) }}</td>
                 </tr>
               </tbody>
@@ -99,7 +99,7 @@
                   <td data-label="Last seen">
                     {{ device.latest_payload_at }}
                   </td>
-                  <td data-label="Created Time">
+                  <td data-label="Created At">
                     {{ dateTime(device.created_at) }}
                   </td>
                 </tr>
