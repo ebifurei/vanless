@@ -128,7 +128,10 @@
         <!-- END MAP -->
       </div>
 
-      <CardBox class="mt-10" hasTable>
+      <SectionTitleLineWithButton :icon="mdiUpload" label="Uplinks" title="Uplinks" class="mt-10" main>
+        <!--  -->
+      </SectionTitleLineWithButton>
+      <CardBox hasTable>
         <TableUplinkList :uplinks="uplinks" :links="links" />
       </CardBox>
     </SectionMain>
@@ -142,7 +145,7 @@ import { computed } from 'vue';
 import SectionMain from '@/Components/SectionMain.vue';
 import CardBox from '@/Components/CardBox.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
-import { mdiArrowLeft, mdiDevices } from '@mdi/js';
+import { mdiArrowLeft, mdiDevices, mdiUpload } from '@mdi/js';
 import BaseButton from '@/Components/BaseButton.vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';

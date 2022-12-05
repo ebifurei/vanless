@@ -41,7 +41,7 @@ export default [
     icon: mdiResponsive,
   },
   {
-    route: "dashboard",
+    route: "style",
     label: "Styles",
     icon: mdiPalette,
   },
