@@ -9,47 +9,53 @@
           roundedFull small />
         </Link>
       </SectionTitleLineWithButton>
-      <form @submit.prevent="submit">
-        <CardBox form @submit.prevent="submit">
-          <FormField label="Device Name">
-            <FormControl v-model="form.name" :icon="mdiAccount" required />
-          </FormField>
-          <FormField label="Device ID" help="make sure device_id same as deviceName on chirpstack">
-            <FormControl v-model="form.device_id" required />
-          </FormField>
-          <FormField label="Device Eui">
-            <FormControl v-model="form.device_eui" required />
-          </FormField>
-          <FormField label="Address">
-            <FormControl v-model="form.address" type="tel" placeholder="Address" />
-          </FormField>
-          <FormField label="Description">
-            <FormControl type="textarea" placeholder="Description" />
-          </FormField>
-          <FormField label="Location" help="pleace select from map below">
-            <FormControl v-model="form.latitude" placeholder="latitude" disabled />
-            <FormControl v-model="form.longitude" placeholder="longitude" disabled />
-          </FormField>
-          <div class="flex justify-end">
-            <BaseButton type="button" color="light" label="Reset location" @click="resetLocation"
-              class="p-0 dark:border-slate-600" />
-          </div>
-          <GoogleMap :apiKey="googleAPI" :center="getCenter" :zoom="16" style="width: 100%; height: 400px"
-            :streetViewControl="false" @click="mapClick" :styles="mapStyle">
-            <Marker v-if="form.latitude" :options="{
-              position: { lat: form.latitude, lng: form.longitude },
-              icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-            }" />
-          </GoogleMap>
-          <template #footer>
-            <BaseButtons>
-              <BaseButton type="submit" color="info" label="Submit" :disabled="form.processing" />
-              <BaseButton color="info" outline label="Reset" @click="reset" />
-              <BaseButton color="danger" outline label="Delete" @click="(isDeleteModalActive = true)" />
-            </BaseButtons>
-          </template>
-        </CardBox>
-      </form>
+
+      <CardBox is-form @submit.prevent="submit">
+        <FormField label="Device Name">
+          <FormControl v-model="form.name" :icon="mdiAccount" required />
+        </FormField>
+
+        <FormField label="Device ID" help="make sure device_id same as deviceName on chirpstack">
+          <FormControl v-model="form.device_id" required />
+        </FormField>
+
+        <FormField label="Device Eui">
+          <FormControl v-model="form.device_eui" required />
+        </FormField>
+
+        <FormField label="Address">
+          <FormControl v-model="form.address" type="tel" placeholder="Address" />
+        </FormField>
+
+        <FormField label="Description">
+          <FormControl type="textarea" placeholder="Description" />
+        </FormField>
+
+        <FormField label="Location" help="pleace select from map below">
+          <FormControl v-model="form.latitude" placeholder="latitude" disabled />
+          <FormControl v-model="form.longitude" placeholder="longitude" disabled />
+        </FormField>
+        <div class="flex justify-end">
+          <BaseButton type="button" color="light" label="Reset location" @click="resetLocation"
+            class="p-0 dark:border-slate-600" />
+        </div>
+
+        <GoogleMap :apiKey="googleAPI" :center="getCenter" :zoom="16" style="width: 100%; height: 400px"
+          :streetViewControl="false" @click="mapClick" :styles="mapStyle">
+          <Marker v-if="form.latitude" :options="{
+            position: { lat: form.latitude, lng: form.longitude },
+            icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+          }" />
+        </GoogleMap>
+
+        <template #footer>
+          <BaseButtons>
+            <BaseButton type="submit" color="info" label="Submit" :disabled="form.processing" />
+            <BaseButton color="info" outline label="Reset" @click="reset" />
+            <BaseButton color="danger" outline label="Delete" @click="(isDeleteModalActive = true)" />
+          </BaseButtons>
+        </template>
+      </CardBox>
       <CardBoxModal :title="`Delete ${form.name ?? form.device_id}`" v-model="isDeleteModalActive" noFooter>
 
         <p>Are you sure you want to delete this device?</p>
