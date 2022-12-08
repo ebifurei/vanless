@@ -149,7 +149,7 @@ const handleDeleteConfirm = () => {
       <p>Are you sure you want to delete this device?</p>
 
       <BaseDivider />
-      <BaseButtons>
+      <BaseButtons class="justify-end">
         <BaseButton label="Delete" color="danger" @click="handleDeleteConfirm" :disabled="form.processing" />
         <BaseButton label="Cancel" color="danger" outline @click="isDeleteModalActive = false" />
       </BaseButtons>
@@ -180,7 +180,7 @@ const handleDeleteConfirm = () => {
         <div class="text-sm">
           {{ selectedDevice.address ?? "No address" }}
         </div>
-        <div class="text-sm">
+        <div class="text-sm text-blue-800">
           <a :href="`https://www.google.com/maps/search/?api=1&query=${selectedDevice.latitude},${selectedDevice.longitude}`"
             target="_blank">Open with Google Map</a>
         </div>
