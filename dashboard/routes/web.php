@@ -3,6 +3,7 @@
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\NotifyMailController;
 use App\Http\Controllers\UplinkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Http;
@@ -39,3 +40,10 @@ Route::post('uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name(
 Route::resource('device', DeviceController::class);
 Route::resource('location', LocationController::class);
 Route::resource('uplink', UplinkController::class);
+
+// mail test
+Route::get('mail', function () {
+    return Inertia::render('MailTest');
+})->name('mail.test');
+
+Route::post('mail', [NotifyMailController::class, 'store'])->name('mail.store');
