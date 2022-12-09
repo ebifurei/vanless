@@ -20,7 +20,7 @@ class UplinkResource extends JsonResource
             'date' => $this->date,
             'port' => $this->port,
             'payloads' => $this->payloads,
-            'created_at' => $this->created_at->toTimeString(),
+            'created_at' => $this->created_at->timezone('Asia/Jakarta')->toTimeString(),
         ];
     }
 }

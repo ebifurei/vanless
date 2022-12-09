@@ -37,7 +37,7 @@ class HomeController extends Controller
                     'device_id' => $uplink->device_id,
                     'date' => $uplink->date,
                     'port' => $uplink->port,
-                    'time' => $uplink->created_at->toTimeString(),
+                    'time' => $uplink->created_at->timezone('Asia/Jakarta')->toTimeString(),
                 ];
             });
 

@@ -60,7 +60,7 @@ class UplinkController extends Controller
         ]);
 
         $device->latest_payload = $payload;
-        $device->latest_payload_at = $uplink->created_at;
+        $device->latest_payload_at = $uplink->created_at->timezone($device->timezone);
         $device->save();
 
         event(new \App\Events\UplinkReceived($device, $mapper));

@@ -1,63 +1,95 @@
 <template>
-  <div>
-    <!-- button in the middle to send post request -->
-    <div class="flex justify-center">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="sendPost">
-        Send Post
-      </button>
-    </div>
-  </div>
+  <LayoutAuthenticated>
+    <SectionMain>
+      <CardBox is-form @submit="submit">
+        <FormValidationErrors />
+
+        <FormField label="deviceName" label-for="deviceName">
+          <FormControl v-model="form.deviceName" :icon="mdiAccount" id="deviceName" autocomplete="deviceName"
+            type="text" required />
+        </FormField>
+
+        <FormField label="devEUI" label-for="devEUI">
+          <FormControl v-model="form.devEUI" :icon="mdiAsterisk" type="text" id="devEUI" autocomplete="current-devEUI"
+            required />
+        </FormField>
+
+        <FormField label="objectJSON" label-for="objectJSON">
+          <FormControl type="textarea" v-model="form.objectJSON" id="objectJSON" autocomplete="current-objectJSON"
+            required />
+        </FormField>
+
+        <FormField label="time" label-for="time">
+          <FormControl type="datetime-local" id="time" name="time" v-model="form.rxInfo[0].time" required />
+        </FormField>
+
+        <!-- button -->
+        <BaseDivider />
+
+        <BaseButtons>
+          <BaseButton type="submit" color="info" label="Send" :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing" />
+        </BaseButtons>
+
+
+      </CardBox>
+    </SectionMain>
+  </LayoutAuthenticated>
 </template>
 
-<script>
-import axios from 'axios';
+<script setup>
+import CardBox from '@/Components/CardBox.vue';
+import FormControl from '@/Components/FormControl.vue';
+import FormField from '@/Components/FormField.vue';
+import FormValidationErrors from '@/Components/FormValidationErrors.vue';
+import SectionMain from '@/Components/SectionMain.vue';
+import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue';
+import { mdiAccount, mdiAsterisk } from '@mdi/js';
+import { useForm } from '@inertiajs/inertia-vue3';
+import BaseDivider from '@/Components/BaseDivider.vue';
+import BaseButtons from '@/Components/BaseButtons.vue';
+import BaseButton from '@/Components/BaseButton.vue';
 
-export default {
-  methods: {
-    sendPost() {
-      // send post request to the server
-      axios.post('/uplink/chirpstack?event=up', {
-        // data to send
-        applicationID: '1',
-        applicationName: 'LoraAntiVandalisme',
-        deviceName: 'vanless-1',
-        devEUI: 'vVnh4aKO7Ho=',
-        rxInfo: [
-          {
-            gatewayID: 'b827ebfffee12e02',
-            name: 'vanless-loraserver',
-            time: '2019-07-21T11:45:01.389569Z',
-            rssi: -41,
-            loRaSNR: 5,
-            location: {
-              latitude: 0,
-              longitude: 0,
-              altitude: 0,
-            },
-          },
-        ],
-        txInfo: {
-          frequency: 923200000,
-          dr: 5,
-        },
-        adr: true,
-        fCnt: 1,
-        fPort: 1,
-        data: 'CK4=',
-        objectJSON: '{ "Peter": 50, "Ben": 37, "Joe": 43 }',
+const form = useForm({
+  applicationID: '1',
+  applicationName: 'LoraAntiVandalisme',
+  deviceName: '',
+  devEUI: 'vVnh4aKO7Ho=',
+  rxInfo: [
+    {
+      gatewayID: 'b827ebfffee12e02',
+      name: 'vanless-loraserver',
+      time: '2019-07-21T11:45:01.389569Z',
+      rssi: -41,
+      loRaSNR: 5,
+      location: {
+        latitude: 0,
+        longitude: 0,
+        altitude: 0,
       },
-      )
-        .then((response) => {
-          // handle success
-          console.log(response);
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    }
-  }
-}
+    },
+  ],
+  txInfo: {
+    frequency: 923200000,
+    dr: 5,
+  },
+  adr: true,
+  fCnt: 1,
+  fPort: 1,
+  data: 'CK4=',
+  objectJSON: '{ "Peter": 50, "Ben": 37, "Joe": 43 }',
+});
+
+const submit = () => {
+  // post with request event=up
+  form.post('/uplink/chirpstack?event=up', {
+    // on success reload the page
+    onSuccess: () => {
+      form.reset();
+    },
+  });
+};
+
 </script>
 
 <style lang="scss" scoped>
