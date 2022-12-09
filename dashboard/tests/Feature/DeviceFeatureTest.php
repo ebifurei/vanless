@@ -49,4 +49,47 @@ class DeviceFeatureTest extends TestCase
             'device_id' => $device['device_id']
         ]);
     }
+
+    public function test_device_can_be_updated()
+    {
+        $this->login();
+        $device = Device::factory()->create();
+
+        $response = $this->put(route('device.update', $device->id), [
+            'name' => 'Test Device',
+            'device_id' => 'test_device',
+            'description' => 'test_description',
+            'device_eui' => 'test_device_eui',
+            'timezone' => 'test_timezone',
+            'address' => 'test_address',
+            'latitude' => -6.175392,
+            'longitude' => 110.827152,
+        ]);
+
+        $this->assertDatabaseHas('devices', [
+            'device_id' => 'test_device'
+        ]);
+    }
+
+    public function test_device_can_be_deleted()
+    {
+        $this->login();
+        $device = Device::factory()->create();
+
+        $response = $this->delete(route('device.destroy', $device->id));
+
+        $this->assertDatabaseMissing('devices', [
+            'id' => $device->id
+        ]);
+    }
+
+    public function test_device_can_be_shown()
+    {
+        $this->login();
+        $device = Device::factory()->create();
+
+        $response = $this->get(route('device.show', $device->id));
+
+        $response->assertStatus(200);
+    }
 }
