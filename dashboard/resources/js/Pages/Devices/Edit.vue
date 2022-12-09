@@ -15,8 +15,8 @@
           <FormControl v-model="form.name" :icon="mdiAccount" required />
         </FormField>
 
-        <FormField label="Device ID" help="make sure device_id same as deviceName on chirpstack">
-          <FormControl v-model="form.device_id" required />
+        <FormField label="Device ID" help="device_id cannot be edited">
+          <FormControl v-model="form.device_id" disabled />
         </FormField>
 
         <FormField label="Device Eui">
