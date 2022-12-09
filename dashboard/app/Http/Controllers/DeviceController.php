@@ -64,7 +64,6 @@ class DeviceController extends Controller
     {
         $request->validate([
             'name'  => 'required',
-            'device_id' => 'required',
             'device_eui' => 'nullable',
             'description' => 'nullable',
             'address' => 'nullable',

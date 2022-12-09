@@ -36,11 +36,6 @@ export default [
     icon: mdiUpload,
   },
   {
-    route: "dashboard",
-    label: "Responsive",
-    icon: mdiResponsive,
-  },
-  {
     route: "style",
     label: "Styles",
     icon: mdiPalette,

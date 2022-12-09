@@ -63,6 +63,8 @@ class UplinkController extends Controller
         $device->latest_payload_at = $uplink->created_at;
         $device->save();
 
+        event(new \App\Events\UplinkReceived($device, $mapper));
+
         return response()->noContent();
     }
 }
