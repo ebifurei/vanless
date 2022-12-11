@@ -132,7 +132,7 @@
         <!--  -->
       </SectionTitleLineWithButton>
       <CardBox hasTable>
-        <TableUplinkList :uplinks="uplinks" :links="links" />
+        <TableUplinkList :uplinks="uplinks" :links="links" noIcon />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

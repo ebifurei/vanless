@@ -12,6 +12,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  noIcon: {
+    type: Boolean,
+    default: false
+  },
 });
 
 </script>
@@ -32,7 +36,7 @@ const props = defineProps({
         </thead>
         <tbody>
           <tr v-for="uplink in props.uplinks" :key="uplink.id">
-            <td class="lg:hidden">
+            <td class="lg:hidden" v-if="!noIcon">
               <UserAvatar :username="uplink.device_id" :api="'initials'" :font-size="40"
                 class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
             </td>

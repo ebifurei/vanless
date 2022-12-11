@@ -61,7 +61,7 @@ const deviceStatusColor = (status) => {
   if (status === "inactive") {
     return "text-gray-600 dark:text-slate-500";
   }
-  if (status === "maintenance") {
+  if (status === "onrepair") {
     return "text-yellow-500";
   }
   if (status === "active") {
@@ -76,7 +76,7 @@ const deviceStatusIcon = (status) => {
   if (status === "inactive") {
     return mdiCloseCircleOutline;
   }
-  if (status === "maintenance") {
+  if (status === "onrepair") {
     return mdiClockAlertOutline;
   }
   if (status === "active") {
