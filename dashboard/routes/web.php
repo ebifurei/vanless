@@ -34,9 +34,6 @@ Route::get('/uplink/test', function () {
     return Inertia::render('UplinkTest');
 });
 
-// uplink chirpstack route
-Route::post('uplink/chirpstack', [UplinkController::class, 'chirpstack'])->name('uplink.chirpstack');
-
 Route::resource('device', DeviceController::class);
 Route::resource('location', LocationController::class);
 Route::resource('uplink', UplinkController::class);
