@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UplinkReceived
+class UplinkReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -36,13 +36,14 @@ class UplinkReceived
      */
     public function broadcastOn()
     {
-        return ['device.' . $this->device['device_id']];
+        return ['device.' . $this->device['id']];
     }
 
     public function broadcastWith()
     {
         return [
             'device_id' => $this->device['device_id'],
+            'status' => $this->device['status'],
             'payload' => $this->getLatestPayload(),
             'time_device' => $this->mapper->getTime()->toDateString(),
             'time_server' => now()->toDateString(),
