@@ -1,7 +1,7 @@
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <CardBox is-form @submit="submit">
+      <CardBox is-form @submit.prevent="submit">
         <FormValidationErrors />
 
         <FormField label="deviceName" label-for="deviceName">
@@ -81,11 +81,11 @@ const form = useForm({
 });
 
 const submit = () => {
-  // post with request event=up
-  form.post('/uplink/chirpstack?event=up', {
-    // on success reload the page
+  // post with params event = up
+  form.post('/api/uplink/chirpstack?event=up', {
+    preserveScroll: true,
     onSuccess: () => {
-      form.reset();
+      form.reset('deviceName', 'devEUI', 'objectJSON', 'time');
     },
   });
 };
