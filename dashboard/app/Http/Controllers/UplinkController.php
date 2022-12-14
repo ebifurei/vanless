@@ -54,10 +54,18 @@ class UplinkController extends Controller
         ], [
             'name' => null,
             'timezone' => 'Asia/Jakarta',
+            'status' => 'active',
             'device_eui' => $mapper->getEui(),
             'latest_payload' => [],
             'latest_payload_at' => null
         ]);
+
+        if (isset($payload['status'])) {
+            if ($device->status != $payload['status']) {
+                event(new \App\Events\DeviceStatusChanged($device, $payload['status']));
+            }
+            $device->status = $payload['status'];
+        }
 
         $device->latest_payload = $payload;
         $device->latest_payload_at = $uplink->created_at->timezone($device->timezone);

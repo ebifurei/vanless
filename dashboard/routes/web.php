@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotifyMailController;
 use App\Http\Controllers\UplinkController;
+use App\Notifications\DeviceStatusNotification;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,16 @@ Route::get('/uplink/test', function () {
 Route::resource('device', DeviceController::class);
 Route::resource('location', LocationController::class);
 Route::resource('uplink', UplinkController::class);
+
+// notification test
+Route::get('/notify', function () {
+    $device = \App\Models\Device::first();
+    $user = \App\Models\User::where('email_subscribe', true)->first();
+
+    $user->notify(new DeviceStatusNotification($device));
+
+    return 'Notification sent!';
+})->name('notify.test');
 
 // mail test
 Route::get('mail', function () {

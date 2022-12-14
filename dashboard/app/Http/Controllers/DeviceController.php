@@ -38,13 +38,14 @@ class DeviceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required',
-            'device_id' => 'required',
-            'device_eui' => 'required',
-            'description' => 'nullable',
-            'address' => 'nullable',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'name'  => 'required|max:255',
+            'device_id' => 'required|max:255',
+            'device_eui' => 'required|max:255',
+            'status' => 'nullable',
+            'description' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
         ]);
 
         Device::create($request->all());
@@ -63,15 +64,23 @@ class DeviceController extends Controller
     public function update(Request $request, Device $device)
     {
         $request->validate([
-            'name'  => 'required',
-            'device_eui' => 'nullable',
-            'description' => 'nullable',
-            'address' => 'nullable',
+            'name'  => 'required|max:255',
+            'status' => 'nullable',
+            'device_eui' => 'nullable|max:255',
+            'description' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
         ]);
 
+        $oldStatus = $device->status;
         $device->update($request->all());
+
+        if ($oldStatus !== $device->status) {
+            event(new \App\Events\DeviceStatusChanged($device, $oldStatus));
+        }
+
+        event(new \App\Events\DeviceUpdated($device));
 
         return redirect()->route('device.index')
             ->with('success', 'Device updated successfully');
