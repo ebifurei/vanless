@@ -3,8 +3,7 @@
 namespace Tests\Feature;
 
 use App\Events\UplinkReceived;
-use App\Models\Device;
-use App\Models\Uplink;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
@@ -140,6 +139,52 @@ class UplinkFeatureTest extends TestCase
         $this->assertDatabaseHas('devices', [
             'device_id' => $uplink['deviceName'],
             'uplink_counter' => 2
+        ]);
+    }
+
+    /** @test */
+    public function it_can_update_device_status_when_storing_chirpstack_uplink()
+    {
+        $uplink = $this->generateChirpstackUplink();
+
+        $uplink["objectJSON"] = "{\"status\": \"inactive\"}";
+
+        $this->post(route('uplink.chirpstack', [
+            'event' => 'up'
+        ]), $uplink);
+
+        $this->assertDatabaseHas('devices', [
+            'device_id' => $uplink['deviceName'],
+            'status' => 'inactive'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_send_notification_when_status_change()
+    {
+        $uplink = $this->generateChirpstackUplink();
+        $user = User::factory()->create([
+            'email_subscribe' => true
+        ]);
+
+        $this->post(route('uplink.chirpstack', [
+            'event' => 'up'
+        ]), $uplink);
+
+        $uplink["objectJSON"] = "{\"status\": \"danger\"}";
+
+        $this->post(route('uplink.chirpstack', [
+            'event' => 'up'
+        ]), $uplink);
+
+        $this->assertDatabaseHas('devices', [
+            'device_id' => $uplink['deviceName'],
+            'status' => 'danger'
+        ]);
+
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_id' => $user->id,
+            'type' => 'App\Notifications\DeviceStatusNotification',
         ]);
     }
 }
