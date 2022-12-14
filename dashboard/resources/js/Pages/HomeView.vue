@@ -30,7 +30,8 @@ import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
       <div class="grid grid-cols-2 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget v-for="device in $page.props.devices" :key="device.id" :number="(device.uplink_counter ?? 0)"
           :trend="device.status" :trend-type="device.status" :label="device.name ?? device.device_id"
-          :color="device.status" :icon="device.status" :last-seen="device.last_payload_at" :config="true" />
+          :color="device.status" :icon="device.status" :last-seen="device.last_payload_at" :config="true"
+          :device-id="device.id" />
       </div>
       <SectionTitleLineWithButton :icon="mdiUpload" title="4 Latest Uplinks">
         <!--  -->

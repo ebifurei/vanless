@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { mdiAlertCircleOutline, mdiCheckCircleOutline, mdiClockAlertOutline, mdiCloseCircleOutline, mdiCog } from "@mdi/js";
+import { mdiAccount, mdiAlertCircleOutline, mdiCheckCircleOutline, mdiClockAlertOutline, mdiCloseCircleOutline, mdiCog } from "@mdi/js";
 import CardBox from "@/Components/CardBox.vue";
 import NumberDynamic from "@/Components/NumberDynamic.vue";
 import BaseIcon from "@/Components/BaseIcon.vue";
@@ -8,10 +8,14 @@ import BaseLevel from "@/Components/BaseLevel.vue";
 import PillTagTrend from "@/Components/PillTagTrend.vue";
 import BaseButton from "@/Components/BaseButton.vue";
 import CardBoxModal from "@/Components/CardBoxModal.vue";
+import { useForm } from '@inertiajs/inertia-vue3';
+import FormField from "@/Components/FormField.vue";
+import FormControl from "@/Components/FormControl.vue";
+import BaseDivider from './BaseDivider.vue';
 
 const isModalActive = ref(false);
 
-defineProps({
+const props = defineProps({
   number: {
     type: Number,
     default: 0,
@@ -52,6 +56,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  deviceId: {
+    type: Number,
+    default: null,
+  },
 });
 
 const deviceStatusColor = (status) => {
@@ -83,6 +91,19 @@ const deviceStatusIcon = (status) => {
     return mdiCheckCircleOutline;
   }
 };
+
+const form = useForm({
+  status: props.trend,
+});
+
+const formStatusSubmit = () => {
+  form.put(route('device.update', props.deviceId), {
+    preserveScroll: true,
+  });
+};
+
+const optionsSelect = ['active', 'inactive', 'onrepair', 'danger'];
+
 </script>
 
 <template>
@@ -110,8 +131,14 @@ const deviceStatusIcon = (status) => {
       <BaseIcon v-if="icon" :path="deviceStatusIcon(icon)" size="75" w="" h="h-16" :class="deviceStatusColor(color)" />
     </BaseLevel>
   </CardBox>
-  <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+
+  <CardBoxModal v-model="isModalActive" title="Change Status" noFooter>
+    <form @submit.prevent="formStatusSubmit">
+      <FormField label="">
+        <FormControl :options="optionsSelect" v-model="form.status" />
+      </FormField>
+
+      <BaseButton type="submit" color="info" label="Update" class="w-full" />
+    </form>
   </CardBoxModal>
 </template>

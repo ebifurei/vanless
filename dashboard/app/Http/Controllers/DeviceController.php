@@ -64,7 +64,7 @@ class DeviceController extends Controller
     public function update(Request $request, Device $device)
     {
         $request->validate([
-            'name'  => 'required|max:255',
+            'name'  => 'nullable|max:255',
             'status' => 'nullable',
             'device_eui' => 'nullable|max:255',
             'description' => 'nullable|max:255',
