@@ -26,16 +26,18 @@ Route::get('/', function () {
     return Inertia::render('StyleView');
 })->name('style');
 
-Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
-
-Route::resource('device', DeviceController::class);
-Route::resource('location', LocationController::class);
-Route::resource('uplink', UplinkController::class);
-Route::get('profile', function () {
-    return Inertia::render('ProfileView');
-})->name('profile');
+// group route dashboard device location uplink as auth
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::resource('device', DeviceController::class);
+    Route::resource('location', LocationController::class);
+    Route::resource('uplink', UplinkController::class);
+    Route::get('/profile', function () {
+        return Inertia::render('ProfileView');
+    })->name('profile');
+});
 
 // send uplink to chirpstack if visit /uplink/test
 Route::get('/uplink/test', function () {
@@ -54,5 +56,4 @@ Route::get('/notify', function () {
 Route::get('mail', function () {
     return Inertia::render('MailTest');
 })->name('mail.test');
-
 Route::post('mail', [NotifyMailController::class, 'store'])->name('mail.store');
