@@ -1,7 +1,6 @@
 <script setup>
 import UserAvatar from '@/Components/UserAvatar.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { defineProps } from 'vue';
 import CardBoxComponentEmpty from "@/Components/CardBoxComponentEmpty.vue";
 
 const props = defineProps({
