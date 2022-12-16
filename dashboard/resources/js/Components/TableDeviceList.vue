@@ -13,6 +13,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import BaseButtons from '@/Components/BaseButtons.vue';
 import BaseDivider from '@/Components/BaseDivider.vue';
 import CardBoxComponentEmpty from '@/Components/CardBoxComponentEmpty.vue';
+import CardBox from '@/Components/CardBox.vue';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const selectedDevice = ref(null);
