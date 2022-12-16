@@ -41,7 +41,7 @@ export default [
     icon: mdiPalette,
   },
   {
-    route: "dashboard",
+    route: "profile",
     label: "Profile",
     icon: mdiAccountCircle,
   },

@@ -30,15 +30,17 @@ Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
+Route::resource('device', DeviceController::class);
+Route::resource('location', LocationController::class);
+Route::resource('uplink', UplinkController::class);
+Route::get('profile', function () {
+    return Inertia::render('ProfileView');
+})->name('profile');
+
 // send uplink to chirpstack if visit /uplink/test
 Route::get('/uplink/test', function () {
     return Inertia::render('UplinkTest');
 });
-
-Route::resource('device', DeviceController::class);
-Route::resource('location', LocationController::class);
-Route::resource('uplink', UplinkController::class);
-
 // notification test
 Route::get('/notify', function () {
     $device = \App\Models\Device::first();
@@ -48,7 +50,6 @@ Route::get('/notify', function () {
 
     return 'Notification sent!';
 })->name('notify.test');
-
 // mail test
 Route::get('mail', function () {
     return Inertia::render('MailTest');
