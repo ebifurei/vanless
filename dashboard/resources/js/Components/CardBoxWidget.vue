@@ -11,7 +11,7 @@ import CardBoxModal from "@/Components/CardBoxModal.vue";
 import { useForm } from '@inertiajs/inertia-vue3';
 import FormField from "@/Components/FormField.vue";
 import FormControl from "@/Components/FormControl.vue";
-import BaseDivider from './BaseDivider.vue';
+import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
 
 const isModalActive = ref(false);
 
@@ -135,7 +135,8 @@ const optionsSelect = ['active', 'inactive', 'onrepair', 'danger'];
   <CardBoxModal v-model="isModalActive" title="Change Status" noFooter>
     <form @submit.prevent="formStatusSubmit">
       <FormField label="">
-        <FormControl :options="optionsSelect" v-model="form.status" />
+        <FormCheckRadioGroup v-model="form.status" name="sample-radio" type="radio"
+          :options="{ danger: 'Danger', active: 'Active', inactive: 'Inactive', onrepair: 'On Repair' }" />
       </FormField>
 
       <BaseButton type="submit" color="info" label="Update" class="w-full" />

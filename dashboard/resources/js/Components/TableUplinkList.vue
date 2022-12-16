@@ -2,6 +2,7 @@
 import UserAvatar from '@/Components/UserAvatar.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { defineProps } from 'vue';
+import CardBoxComponentEmpty from "@/Components/CardBoxComponentEmpty.vue";
 
 const props = defineProps({
   uplinks: {
@@ -22,7 +23,7 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="rounded-lg shadow dark:shadow-gray-500">
+    <div v-if="props.uplinks" class="rounded-lg shadow dark:shadow-gray-500">
       <table class="w-full'">
         <thead>
           <tr>
@@ -60,6 +61,11 @@ const props = defineProps({
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else>
+      <CardBox>
+        <CardBoxComponentEmpty />
+      </CardBox>
     </div>
 
     <Pagination class="mt-6" :links="props.links" />
