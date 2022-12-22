@@ -1,50 +1,67 @@
 <script setup>
-import GuestLayout from '@/Layouts/Breeze/GuestLayout.vue';
-import InputError from '@/Components/Breeze/InputError.vue';
-import InputLabel from '@/Components/Breeze/InputLabel.vue';
-import PrimaryButton from '@/Components/Breeze/PrimaryButton.vue';
-import TextInput from '@/Components/Breeze/TextInput.vue';
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { useForm, Head, Link } from '@inertiajs/inertia-vue3'
+import { mdiEmail } from '@mdi/js'
+import LayoutGuest from '@/Layouts/LayoutGuest.vue'
+import SectionFullScreen from '@/Components/SectionFullScreen.vue'
+import CardBox from '@/Components/CardBox.vue'
+import FormField from '@/Components/FormField.vue'
+import FormControl from '@/Components/FormControl.vue'
+import BaseDivider from '@/Components/BaseDivider.vue'
+import BaseButton from '@/Components/BaseButton.vue'
+import FormValidationErrors from '@/Components/FormValidationErrors.vue'
+import NotificationBarInCard from '@/Components/NotificationBarInCard.vue'
+import BaseLevel from '@/Components/BaseLevel.vue'
 
 defineProps({
-    status: String,
-});
+  status: {
+    type: String,
+    default: null
+  }
+})
 
 const form = useForm({
-    email: '',
-});
+  email: ''
+})
 
 const submit = () => {
-    form.post(route('password.email'));
-};
+  form.post(route('password.email'))
+}
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Forgot Password" />
+  <LayoutGuest>
 
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that
-            will allow you to choose a new one.
-            </div>
+    <Head title="Forgot Password" />
 
-            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-              {{ status }}
-            </div>
+    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+      <CardBox :class="cardClass" is-form @submit.prevent="submit">
+        <FormValidationErrors />
 
-            <form @submit.prevent="submit">
-              <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
-                  autocomplete="username" />
-                <InputError class="mt-2" :message="form.errors.email" />
-              </div>
+        <NotificationBarInCard v-if="status" color="info">
+          {{ status }}
+        </NotificationBarInCard>
 
-              <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                  Email Password Reset Link
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        <FormField>
+          <div class="mb-4 text-sm text-gray-600">
+            Forgot your password? No problem. Just let us know your email address and we will email you a password reset
+            link that will allow you to choose a new one.
+          </div>
+        </FormField>
+
+        <FormField label="Email" help="Please enter your email">
+          <FormControl v-model="form.email" :icon="mdiEmail" autocomplete="email" type="email" required />
+        </FormField>
+
+        <BaseDivider />
+
+        <BaseLevel>
+          <BaseButton type="submit" color="info" label="Email link" :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing" />
+          <Link :href="route('login')">
+          Back to login
+          </Link>
+        </BaseLevel>
+      </CardBox>
+    </SectionFullScreen>
+  </LayoutGuest>
 </template>

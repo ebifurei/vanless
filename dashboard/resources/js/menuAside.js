@@ -21,7 +21,7 @@ export default [
     label: "Dashboard",
   },
   {
-    route: "devices.index",
+    route: "device.index",
     label: "Devices Table",
     icon: mdiTable,
   },
@@ -36,17 +36,12 @@ export default [
     icon: mdiUpload,
   },
   {
-    route: "dashboard",
-    label: "Responsive",
-    icon: mdiResponsive,
-  },
-  {
-    route: "dashboard",
+    route: "style",
     label: "Styles",
     icon: mdiPalette,
   },
   {
-    route: "dashboard",
+    route: "profile",
     label: "Profile",
     icon: mdiAccountCircle,
   },

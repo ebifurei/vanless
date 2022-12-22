@@ -15,11 +15,7 @@ abstract class TestCase extends BaseTestCase
 
     public function login($user = null)
     {
-        $this->user = $user ?? User::factory()->create([
-            'name' => 'aaa',
-            'email' => 'aaa@aaa.aaa',
-            'role_id' => 1,
-        ]);
+        $this->user = $user ?? User::factory()->create();
 
         $this->actingAs($this->user);
     }

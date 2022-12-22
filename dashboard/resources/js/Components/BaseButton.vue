@@ -41,6 +41,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  title: {
+    type: String,
+    default: null,
+  },
   small: Boolean,
   outline: Boolean,
   active: Boolean,
@@ -110,7 +114,7 @@ const componentClass = computed(() => {
 
 <template>
   <component :is="is" :class="componentClass" :href="routeName ? route(routeName) : href" :type="computedType"
-    :target="target" :disabled="disabled">
+    :target="target" :disabled="disabled" :title="title">
     <BaseIcon v-if="icon" :path="icon" :size="iconSize" />
     <span v-if="label" :class="labelClass">{{ label }}</span>
   </component>

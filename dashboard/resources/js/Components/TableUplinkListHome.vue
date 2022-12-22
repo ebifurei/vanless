@@ -1,13 +1,5 @@
 <script setup>
 import UserAvatar from '@/Components/UserAvatar.vue';
-import { defineProps } from 'vue';
-
-const props = defineProps({
-  uplinksData: {
-    type: Array,
-    required: true,
-  },
-});
 
 </script>
 
@@ -25,7 +17,7 @@ const props = defineProps({
           </tr>
         </thead>
         <tbody>
-          <tr v-for="uplink in uplinksData" :key="uplink.id">
+          <tr v-for="uplink in $page.props.uplinks" :key="uplink.id">
             <td class="lg:hidden">
               <UserAvatar :username="uplink.device_id" :api="'initials'" :font-size="40"
                 class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />

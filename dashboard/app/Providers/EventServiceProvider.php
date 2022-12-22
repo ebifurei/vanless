@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\DeviceStatusChanged;
+use App\Events\DeviceUpdated;
+use App\Events\UplinkReceived;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +20,15 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        UplinkReceived::class => [
+            \App\Listeners\UpdateDeviceUplinkCounter::class,
+            \App\Listeners\UpdateDeviceProgressDaily::class,
+        ],
+
+        DeviceStatusChanged::class => [
+            \App\Listeners\SendDeviceStatusNotification::class,
         ],
     ];
 

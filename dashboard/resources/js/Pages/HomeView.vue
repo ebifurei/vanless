@@ -6,7 +6,6 @@ import {
   mdiCloseCircleOutline,
   mdiAlertCircleOutline,
   mdiClockAlertOutline,
-  mdiAccessPoint,
 } from "@mdi/js";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
@@ -14,45 +13,10 @@ import CardBox from "@/Components/CardBox.vue";
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.vue";
 import { Head } from '@inertiajs/inertia-vue3';
-import TableDeviceListHome from '@/Components/TableDeviceListHome.vue';
 import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
+import CardBoxComponentEmpty from '@/Components/CardBoxComponentEmpty.vue';
 
-const props = defineProps({
-  uplinks: {
-    type: Array,
-    required: true,
-  },
-});
 
-const deviceStatusColor = (status) => {
-  if (status === "danger") {
-    return "text-red-500";
-  }
-  if (status === "inactive") {
-    return "text-gray-600 dark:text-slate-500";
-  }
-  if (status === "maintenance") {
-    return "text-yellow-500";
-  }
-  if (status === "active") {
-    return "text-emerald-500";
-  }
-};
-
-const deviceStatusIcon = (status) => {
-  if (status === "danger") {
-    return mdiAlertCircleOutline;
-  }
-  if (status === "inactive") {
-    return mdiCloseCircleOutline
-  }
-  if (status === "maintenance") {
-    return mdiClockAlertOutline;
-  }
-  if (status === "active") {
-    return mdiCheckCircleOutline
-  }
-};
 
 </script>
 
@@ -62,16 +26,24 @@ const deviceStatusIcon = (status) => {
     <Head title="Dashboard" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        <!-- <BaseButton href="#" target="_blank" :icon="mdiGithub" label="GitHub" color="contrast" rounded-full small /> -->
+        <!-- -->
       </SectionTitleLineWithButton>
-      <div class="grid grid-cols-2 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget v-for="device in $page.props.devices" :key="device.id" :number="100" :trend="device.status"
-          :trend-type="device.status" :label="device.name ?? device.device_id" :color="deviceStatusColor(device.status)"
-          :icon="deviceStatusIcon(device.status)" :last-seen="device.last_payload_at" />
+      <div v-if="$page.props.devices" class="grid grid-cols-2 gap-6 lg:grid-cols-3 mb-6">
+        <CardBoxWidget v-for="device in $page.props.devices" :key="device.id" :number="(device.uplink_counter ?? 0)"
+          :trend="device.status" :trend-type="device.status" :label="device.name ?? device.device_id"
+          :color="device.status" :icon="device.status" :last-seen="device.last_payload_at" :config="true"
+          :device-id="device.id" />
       </div>
-      <SectionTitleLineWithButton :icon="mdiUpload" title="6 Latest Uplinks" />
+      <div v-else>
+        <CardBox>
+          <CardBoxComponentEmpty />
+        </CardBox>
+      </div>
+      <SectionTitleLineWithButton :icon="mdiUpload" title="4 Latest Uplinks">
+        <!--  -->
+      </SectionTitleLineWithButton>
       <CardBox has-table>
-        <TableUplinkListHome :uplinks-data="uplinks" />
+        <TableUplinkListHome />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

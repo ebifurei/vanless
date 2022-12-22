@@ -86,7 +86,7 @@ const upload = (event) => {
   <div class="flex items-stretch justify-start relative">
     <label class="inline-flex">
       <BaseButton as="a" :class="{ 'w-1  2 h-12': isRoundIcon, 'rounded-r-none': showFilename }"
-        :icon-size="isRound  Icon ? 24 : undefined" :label="isRoundIcon ? null : label" :icon="icon" :color="color"
+        :icon-size="isRoundIcon ? 24 : undefined" :label="isRoundIcon ? null : label" :icon="icon" :color="color"
         :rounded-full="isRoundIcon" />
       <input ref="root" type="file"
         class="absolute top-0 left-0 w-full h-full opacity-0 outline-none cursor-pointer -z-1" :accept="accept"

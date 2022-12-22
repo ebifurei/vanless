@@ -1,39 +1,42 @@
 <template>
   <LayoutAuthenticated>
+
     <Head title="Locations" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiMapCheckOutline" title="Locations" main>
         <!--  -->
       </SectionTitleLineWithButton>
-
-      <CardBox>
-        <GoogleMap :api-key="googleAPI" style="width: 100%; height: 500px" :center="center" :zoom="15">
-          <Marker :options="{ position: center }">
-            <InfoWindow>
-              <div id="content">
-                <div id="siteNotice"></div>
-                <h1 id="firstHeading" class="firstHeading">Uluru</h1>
-                <div id="bodyContent">
-                  <p>
-                    <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large sandstone rock formation in the southern
-                    part of the Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) south west of the
-                    nearest large town, Alice Springs; 450&#160;km (280&#160;mi) by road. Kata Tjuta and Uluru are the two
-                    major features of the Uluru - Kata Tjuta National Park. Uluru is sacred to the Pitjantjatjara and
-                    Yankunytjatjara, the Aboriginal people of the area. It has many springs, waterholes, rock caves and
-                    ancient paintings. Uluru is listed as a World Heritage Site.
-                  </p>
-                  <p>
-                    Attribution: Uluru,
-                    <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">
-                      https://en.wikipedia.org/w/index.php?title=Uluru</a>
-                    (last visited June 22, 2009).
-                  </p>
+      <GoogleMap :api-key="googleAPI" style="width: 100%; height: 500px" :center="getCenter" :zoom="16"
+        :street-view-control="false" :disable-default-ui="true" :styles="mapStyle">
+        <Marker v-for="l in devices" :key="l.id" :options="{ position: getPosition(l), icon: getIcon(l) }">
+          <InfoWindow>
+            <!-- name, address, description, status with pilltagtrend  -->
+            <div class="flex flex-col dark:text-black">
+              <div class="flex flex-row">
+                <div class="flex flex-col">
+                  <div class="font-bold text-lg ">
+                    {{ l.name ?? l.device_id }}
+                  </div>
+                  <div class="text-sm">{{ l.address ?? 'No Address yet' }}</div>
+                  <div class="text-sm">{{ l.description ?? 'No Description yet' }}</div>
+                </div>
+                <div class="flex flex-col ml-2">
+                  <BaseLevel>
+                    <PillTagTrend :trend="l.status" :trend-type="l.status" />
+                  </BaseLevel>
                 </div>
               </div>
-            </InfoWindow>
-          </Marker>
-        </GoogleMap>
-      </CardBox>
+              <div class="flex flex-row mt-2">
+                <div class="flex flex-col ml-2">
+                  <div class="font-bold">Last Seen</div>
+                  <div class="text-sm">{{ l.last_payload_at }}</div>
+                </div>
+              </div>
+            </div>
+          </InfoWindow>
+        </Marker>
+      </GoogleMap>
+
     </SectionMain>
   </LayoutAuthenticated>
 </template>
@@ -44,14 +47,48 @@ import SectionMain from '@/Components/SectionMain.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue';
 import { mdiMapCheckOutline } from '@mdi/js';
-import CardBox from '@/Components/CardBox.vue';
 import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { computed } from 'vue';
+import PillTagTrend from '@/Components/PillTagTrend.vue';
+import BaseLevel from '@/Components/BaseLevel.vue';
+import { useStyleStore } from '@/Stores/style';
+import { storeToRefs } from 'pinia';
 
-const center = { lat: 40.7128, lng: -74.0060 };
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const devices = computed(() => usePage().props.value.devices);
+const state = storeToRefs(useStyleStore());
+const mapStyle = state.mapStyle;
 
+const getCenter = {
+  // average of all latitudes and longitudes
+  lat: devices.value.reduce((a, b) => a + parseFloat(b.latitude), 0) / devices.value.length,
+  lng: devices.value.reduce((a, b) => a + parseFloat(b.longitude), 0) / devices.value.length
+};
+
+const getPosition = (l) => {
+  return {
+    lat: parseFloat(l.latitude),
+    lng: parseFloat(l.longitude)
+  }
+};
+
+const getIcon = (l) => {
+  switch (l.status) {
+    case 'active':
+      return 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
+    case 'danger':
+      return 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    case 'onrepair':
+      return 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+    case 'inactive':
+      return 'https://maps.google.com/mapfiles/ms/icons/ltblue-dot.png';
+    default:
+      return 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+  }
+}
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

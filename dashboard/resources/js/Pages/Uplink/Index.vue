@@ -7,7 +7,7 @@
         <!--  -->
       </SectionTitleLineWithButton>
 
-      <TableUplinkList :uplinksData="uplinks" />
+      <TableUplinkList :uplinks="uplinks" :links="links" />
 
     </SectionMain>
   </LayoutAuthenticated>
@@ -20,17 +20,23 @@ import SectionMain from '@/Components/SectionMain.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
 import TableUplinkList from '@/Components/TableUplinkList.vue';
 import { mdiLinkVariant } from '@mdi/js';
-import { defineProps } from 'vue';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { computed } from 'vue';
 
-const props = defineProps({
-  uplinks: {
-    type: Object,
-    required: true,
-  },
-});
+const uplinks = computed(() => usePage().props.value.uplinks.data);
+const links = computed(() => usePage().props.value.uplinks.links);
 
 </script>
 
-<style lang="scss" scoped>
+<style>
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px
+}
 
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  background: #6B7280;
+}
 </style>

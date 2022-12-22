@@ -1,12 +1,20 @@
 <script setup>
 import UserAvatar from '@/Components/UserAvatar.vue';
-import { defineProps } from 'vue';
 import Pagination from '@/Components/Pagination.vue';
+import CardBoxComponentEmpty from "@/Components/CardBoxComponentEmpty.vue";
 
 const props = defineProps({
-  uplinksData: {
-    type: Object,
+  uplinks: {
+    type: Array,
     required: true,
+  },
+  links: {
+    type: Array,
+    required: true,
+  },
+  noIcon: {
+    type: Boolean,
+    default: false
   },
 });
 
@@ -14,7 +22,7 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="rounded-lg shadow dark:shadow-gray-500">
+    <div v-if="props.uplinks" class="rounded-lg shadow dark:shadow-gray-500">
       <table class="w-full'">
         <thead>
           <tr>
@@ -24,12 +32,11 @@ const props = defineProps({
             <th>Date</th>
             <th>Payloads</th>
             <th>Time</th>
-            <th />
           </tr>
         </thead>
         <tbody>
-          <tr v-for="uplink in uplinksData.data" :key="uplink.id">
-            <td class="lg:hidden">
+          <tr v-for="uplink in props.uplinks" :key="uplink.id">
+            <td class="lg:hidden" v-if="!noIcon">
               <UserAvatar :username="uplink.device_id" :api="'initials'" :font-size="40"
                 class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
             </td>
@@ -54,8 +61,13 @@ const props = defineProps({
         </tbody>
       </table>
     </div>
+    <div v-else>
+      <CardBox>
+        <CardBoxComponentEmpty />
+      </CardBox>
+    </div>
 
-    <Pagination class="mt-6" :links="uplinksData.links" />
+    <Pagination class="mt-6" :links="props.links" />
   </div>
 </template>
 
