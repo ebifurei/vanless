@@ -12,6 +12,7 @@ import {
   mdiPalette,
   mdiGoogleMaps,
   mdiUpload,
+  mdiAccountMultiple,
 } from "@mdi/js";
 
 export default [
@@ -46,9 +47,9 @@ export default [
     icon: mdiAccountCircle,
   },
   {
-    route: "login",
-    label: "Login",
-    icon: mdiLock,
+    route: "user.index",
+    label: "Users",
+    icon: mdiAccountMultiple,
   },
   {
     route: "dashboard",

@@ -18,6 +18,7 @@ useMainStore().setUser({
   name: usePage().props.value.auth.user.name,
   email: usePage().props.value.auth.user.email,
   avatar: "https://avatars.dicebear.com/api/avataaars/" + usePage().props.value.auth.user.name.replace(/[^a-z0-9]+/i, "-") + ".svg",
+  email_subscribe: usePage().props.value.auth.user.email_subscribe,
 });
 
 const layoutAsidePadding = "xl:pl-60";
