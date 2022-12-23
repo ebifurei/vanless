@@ -31,20 +31,6 @@ class UserFeatureTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_can_see_email_verification_page()
-    {
-        $response = $this->get('/verify-email');
-
-        $response->assertStatus(200);
-    }
-
-    public function test_user_can_see_email_verification_notice_page()
-    {
-        $response = $this->get('/verify-email?notice=1');
-
-        $response->assertStatus(200);
-    }
-
     public function test_user_can_create_account()
     {
         $response = $this->post('/register', [

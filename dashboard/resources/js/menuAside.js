@@ -53,7 +53,7 @@ export default [
   },
   {
     route: "dashboard",
-    label: "Error",
+    label: "Alert",
     icon: mdiAlertCircle,
   },
   {
