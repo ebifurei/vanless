@@ -7,7 +7,7 @@ use App\Models\UplinkCounterDaily;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class UpdateDeviceProgressDaily
+class UpdateDeviceProgressDaily implements ShouldQueue
 {
     /**
      * Create the event listener.
