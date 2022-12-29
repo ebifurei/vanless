@@ -30,6 +30,12 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 // group route dashboard device location uplink as auth
+
+// send uplink to chirpstack if visit /uplink/test
+Route::get('/uplink/test', function () {
+    return Inertia::render('UplinkTest');
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::resource('device', DeviceController::class);
@@ -41,10 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class);
 });
 
-// send uplink to chirpstack if visit /uplink/test
-Route::get('/uplink/test', function () {
-    return Inertia::render('UplinkTest');
-});
 // notification test
 Route::get('/notify', function () {
     $device = \App\Models\Device::first();
