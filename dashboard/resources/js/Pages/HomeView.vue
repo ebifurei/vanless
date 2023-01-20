@@ -2,10 +2,6 @@
 import {
   mdiChartTimelineVariant,
   mdiUpload,
-  mdiCheckCircleOutline,
-  mdiCloseCircleOutline,
-  mdiAlertCircleOutline,
-  mdiClockAlertOutline,
 } from "@mdi/js";
 import SectionMain from "@/Components/SectionMain.vue";
 import CardBoxWidget from "@/Components/CardBoxWidget.vue";
@@ -15,8 +11,17 @@ import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.
 import { Head } from '@inertiajs/inertia-vue3';
 import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
 import CardBoxComponentEmpty from '@/Components/CardBoxComponentEmpty.vue';
+import Pusher from 'pusher-js';
+import { onMounted } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 
+const subscribe = Echo.channel('uplink-received').listen('UplinkReceived', (e) => {
+  Inertia.reload();
+});
 
+onMounted(() => {
+  subscribe;
+});
 
 </script>
 
