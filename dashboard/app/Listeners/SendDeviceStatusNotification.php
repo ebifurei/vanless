@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendDeviceStatusNotification
+class SendDeviceStatusNotification implements ShouldQueue
 {
     /**
      * Create the event listener.

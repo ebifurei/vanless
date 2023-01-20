@@ -42,7 +42,7 @@ const statusColor = computed(() => {
   if (props.status === "active") {
     return "%2310b981";
   }
-  return "%2300b0f0";
+  return;
 });
 
 const avatar = computed(

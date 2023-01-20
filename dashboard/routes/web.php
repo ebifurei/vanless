@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotifyMailController;
 use App\Http\Controllers\UplinkController;
+use App\Http\Controllers\UserController;
 use App\Notifications\DeviceStatusNotification;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Http;
@@ -29,6 +30,12 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 // group route dashboard device location uplink as auth
+
+// send uplink to chirpstack if visit /uplink/test
+Route::get('/uplink/test', function () {
+    return Inertia::render('UplinkTest');
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::resource('device', DeviceController::class);
@@ -37,12 +44,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {
         return Inertia::render('ProfileView');
     })->name('profile');
+    Route::resource('user', UserController::class);
 });
 
-// send uplink to chirpstack if visit /uplink/test
-Route::get('/uplink/test', function () {
-    return Inertia::render('UplinkTest');
-});
 // notification test
 Route::get('/notify', function () {
     $device = \App\Models\Device::first();

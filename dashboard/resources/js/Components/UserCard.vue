@@ -12,7 +12,10 @@ const mainStore = useMainStore();
 
 const userName = computed(() => mainStore.userName);
 
-const userSwitchVal = ref(false);
+const userSwitchVal = computed({
+  get: () => mainStore.userNotification,
+  set: (val) => mainStore.setUserSwitchVal(val),
+});
 </script>
 
 <template>
@@ -27,7 +30,6 @@ const userSwitchVal = ref(false);
         <h1 class="text-2xl">
           Howdy, <b>{{ userName }}</b>!
         </h1>
-        <p>Last login <b>12 mins ago</b> from <b>127.0.0.1</b></p>
         <div class="flex justify-center md:block">
           <PillTag label="Verified" color="info" :icon="mdiCheckDecagram" />
         </div>

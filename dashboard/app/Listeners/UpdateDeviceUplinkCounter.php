@@ -6,7 +6,7 @@ use App\Events\UplinkReceived;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class UpdateDeviceUplinkCounter
+class UpdateDeviceUplinkCounter implements ShouldQueue
 {
     /**
      * Create the event listener.

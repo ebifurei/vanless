@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 
 export const useMainStore = defineStore("main", {
   state: () => ({
@@ -7,6 +6,7 @@ export const useMainStore = defineStore("main", {
     userName: null,
     userEmail: null,
     userAvatar: null,
+    userNotification: null,
 
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
@@ -21,6 +21,13 @@ export const useMainStore = defineStore("main", {
       }
       if (payload.avatar) {
         this.userAvatar = payload.avatar;
+      }
+      if (payload.email_subscribe) {
+        if (payload.email_subscribe === 1) {
+          this.userNotification = true;
+        } else {
+          this.userNotification = false;
+        }
       }
     },
   },

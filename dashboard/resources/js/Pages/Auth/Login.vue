@@ -70,10 +70,11 @@ const submit = () => {
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing" />
-            <BaseButton v-if="canResetPassword" route-name="password.request" color="info" outline label="Remind" />
+            <BaseButton route-name="register" color="info" outline label="Register" />
           </BaseButtons>
-          <Link :href="route('register')">
-          Register
+          <Link v-if="canResetPassword" :href="route('password.request')"
+            class="text-sm text-blue-500 hover:text-blue-700">
+          Forget your password ?
           </Link>
         </BaseLevel>
       </CardBox>

@@ -36,7 +36,7 @@ class UplinkReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['device.' . $this->device['id']];
+        return ['uplink-received'];
     }
 
     public function broadcastWith()
