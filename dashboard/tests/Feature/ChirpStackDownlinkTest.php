@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Services\Downlink\ChirpStackDownlink;
+use App\Services\Chirpstack\ChirpStackDownlink;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
