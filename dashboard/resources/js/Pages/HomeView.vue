@@ -11,7 +11,6 @@ import SectionTitleLineWithButton from "@/Components/SectionTitleLineWithButton.
 import { Head } from '@inertiajs/inertia-vue3';
 import TableUplinkListHome from '@/Components/TableUplinkListHome.vue';
 import CardBoxComponentEmpty from '@/Components/CardBoxComponentEmpty.vue';
-import Pusher from 'pusher-js';
 import { onMounted } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 
