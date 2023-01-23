@@ -142,49 +142,50 @@ class UplinkFeatureTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_update_device_status_when_storing_chirpstack_uplink()
-    {
-        $uplink = $this->generateChirpstackUplink();
+    // /** @test */ not use beacuse we using port to determine status rather then payload
+    // public function it_can_update_device_status_when_storing_chirpstack_uplink()
+    // {
+    //     $uplink = $this->generateChirpstackUplink();
 
-        $uplink["objectJSON"] = "{\"status\": \"inactive\"}";
+    //     $uplink["objectJSON"] = "{\"status\": \"inactive\"}";
 
-        $this->post(route('uplink.chirpstack', [
-            'event' => 'up'
-        ]), $uplink);
+    //     $this->post(route('uplink.chirpstack', [
+    //         'event' => 'up'
+    //     ]), $uplink);
 
-        $this->assertDatabaseHas('devices', [
-            'device_id' => $uplink['deviceName'],
-            'status' => 'inactive'
-        ]);
-    }
+    //     $this->assertDatabaseHas('devices', [
+    //         'device_id' => $uplink['deviceName'],
+    //         'status' => 'inactive'
+    //     ]);
+    // }
 
-    /** @test */
-    public function it_can_send_notification_when_status_change()
-    {
-        $uplink = $this->generateChirpstackUplink();
-        $user = User::factory()->create([
-            'email_subscribe' => true
-        ]);
+    // /** @test */
+    // public function it_can_send_notification_when_status_change()
+    // {
+    //     $uplink = $this->generateChirpstackUplink();
+    //     $user = User::factory()->create([
+    //         'email_subscribe' => true
+    //     ]);
 
-        $this->post(route('uplink.chirpstack', [
-            'event' => 'up'
-        ]), $uplink);
+    //     $this->post(route('uplink.chirpstack', [
+    //         'event' => 'up'
+    //     ]), $uplink);
 
-        $uplink["objectJSON"] = "{\"status\": \"danger\"}";
+    //     $uplink["objectJSON"] = "{\"status\": \"danger\"}";
 
-        $this->post(route('uplink.chirpstack', [
-            'event' => 'up'
-        ]), $uplink);
+    //     $this->post(route('uplink.chirpstack', [
+    //         'event' => 'up'
+    //     ]), $uplink);
 
-        $this->assertDatabaseHas('devices', [
-            'device_id' => $uplink['deviceName'],
-            'status' => 'danger'
-        ]);
+    //     $this->assertDatabaseHas('devices', [
+    //         'device_id' => $uplink['deviceName'],
+    //         'status' => 'danger'
+    //     ]);
 
-        $this->assertDatabaseHas('notifications', [
-            'notifiable_id' => $user->id,
-            'type' => 'App\Notifications\DeviceStatusNotification',
-        ]);
-    }
+    //     $this->assertDatabaseHas('notifications', [
+    //         'notifiable_id' => $user->id,
+    //         'type' => 'App\Notifications\DeviceStatusNotification',
+    //     ]);
+    // }
+
 }

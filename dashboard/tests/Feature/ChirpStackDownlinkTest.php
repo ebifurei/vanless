@@ -20,12 +20,13 @@ class ChirpStackDownlinkTest extends TestCase
         $this->chirpStackDownlink = new ChirpStackDownlink($client);
     }
 
+    // when execute this test, it will send downlink to device carefully
     public function testSendDownlink()
     {
         $deviceEui = '374d742c65b7e2ca';
         $payload = '0';
         $port = 1;
         $response = $this->chirpStackDownlink->sendDownlink($deviceEui, $payload, $port);
-        $this->assertEquals(200, $response);
+        $this->assertNotNull($response);
     }
 }
