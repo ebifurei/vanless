@@ -18,15 +18,17 @@ class UplinkReceived implements ShouldBroadcast
 
     public $device;
     public $mapper;
+    public $count;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Device $device, UplinkMapperInterface $mapper)
+    public function __construct(Device $device, UplinkMapperInterface $mapper, $count)
     {
         $this->device = $device;
         $this->mapper = $mapper;
+        $this->count = $count;
     }
 
     /**
@@ -47,6 +49,7 @@ class UplinkReceived implements ShouldBroadcast
             'payload' => $this->getLatestPayload(),
             'time_device' => $this->mapper->getTime()->toDateString(),
             'time_server' => now()->toDateString(),
+            'count' => $this->count,
         ];
     }
 

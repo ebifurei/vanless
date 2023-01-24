@@ -87,6 +87,8 @@ const handleDeleteConfirm = () => {
             <th>Name</th>
             <th>Device_id</th>
             <th>Device EUI</th>
+            <th>Device Class</th>
+            <th>Uplink Interval</th>
             <th>Address</th>
             <th>Progress Daily</th>
             <th>Last Payload</th>
@@ -114,6 +116,12 @@ const handleDeleteConfirm = () => {
             </td>
             <td data-label="Device EUI">
               {{ device.device_eui }}
+            </td>
+            <td data-label="Device Class">
+              {{ device.device_class ?? "A" }}
+            </td>
+            <td data-label="Uplink Interval">
+              {{ device.device_normal_interval ?? "5" }}
             </td>
             <td data-label="Address">
               {{ device.address ?? "No address" }}

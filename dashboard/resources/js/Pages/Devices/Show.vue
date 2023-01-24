@@ -34,6 +34,14 @@
                   <td class="px-4 py-2 text-right">{{ device.device_eui }}</td>
                 </tr>
                 <tr>
+                  <td class="font-semibold pr-3 text-left">Device Class</td>
+                  <td class="px-4 py-2 text-right">{{ device.device_Class ?? "C" }}</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold pr-3 text-left">Uplink Interval</td>
+                  <td class="px-4 py-2 text-right">{{ device.device_normal_internal ?? "5" }}</td>
+                </tr>
+                <tr>
                   <td class="font-semibold pr-3 text-left">Description</td>
                   <td class="px-4 py-2 text-right">{{ device.description ?? 'No Description' }}</td>
                 </tr>

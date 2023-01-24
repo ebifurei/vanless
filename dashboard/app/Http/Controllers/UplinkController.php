@@ -56,22 +56,45 @@ class UplinkController extends Controller
             'timezone' => 'Asia/Jakarta',
             'status' => 'active',
             'device_eui' => $mapper->getEui(),
+            'device_class' => null,
+            'device_normal_interval' => null,
+            'device_alert_interval' => null,
             'latest_payload' => [],
             'latest_payload_at' => null
         ]);
 
-        if (isset($payload['status'])) {
-            if ($device->status != $payload['status']) {
-                event(new \App\Events\DeviceStatusChanged($device, $payload['status']));
-            }
-            $device->status = $payload['status'];
+        // if data port 3 then status is onrepair, port 2 is danger, else is active
+        $count = False;
+        if ($data['port'] == 3) {
+            $status = 'onrepair';
+            $count = True;
+        } else if ($data['port'] == 2) {
+            $status = 'danger';
+            $count = True;
+        } else if ($data['port'] == 1) {
+            $status = 'active';
+            $count = True;
         }
+
+        if (isset($status)) {
+            if ($device->status != $status) {
+                event(new \App\Events\DeviceStatusChanged($device, $status));
+            }
+            $device->status = $status;
+        }
+
+        // if (isset($payload['status'])) {
+        //     if ($device->status != $payload['status']) {
+        //         event(new \App\Events\DeviceStatusChanged($device, $payload['status']));
+        //     }
+        //     $device->status = $payload['status'];
+        // }
 
         $device->latest_payload = $payload;
         $device->latest_payload_at = $uplink->created_at->timezone($device->timezone);
         $device->save();
 
-        event(new \App\Events\UplinkReceived($device, $mapper));
+        event(new \App\Events\UplinkReceived($device, $mapper, $count));
 
         return response()->noContent();
     }
