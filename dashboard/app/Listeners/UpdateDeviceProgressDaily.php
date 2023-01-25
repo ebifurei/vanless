@@ -27,7 +27,7 @@ class UpdateDeviceProgressDaily implements ShouldQueue
      */
     public function handle(UplinkReceived $event)
     {
-        if (!$event->count) {
+        if ($event->mapper->getPort() > 3) {
             return;
         };
         $device = $event->device;
