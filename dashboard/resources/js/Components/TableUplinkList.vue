@@ -2,6 +2,7 @@
 import UserAvatar from '@/Components/UserAvatar.vue';
 import Pagination from '@/Components/Pagination.vue';
 import CardBoxComponentEmpty from "@/Components/CardBoxComponentEmpty.vue";
+import CardBox from "@/Components/CardBox.vue";
 
 const props = defineProps({
   uplinks: {

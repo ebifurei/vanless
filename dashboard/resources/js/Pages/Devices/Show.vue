@@ -121,7 +121,7 @@
           <CardBox class="h-full" hasTable>
             <div v-if="device.latitude">
               <GoogleMap v-if="device.latitude" :api-key="googleAPI" :center="deviceLocation" :zoom="17"
-                style="width: 100%; height: 492px" :street-view-control="false" :styles="mapStyle">
+                style="width: 100%; height: 580px" :street-view-control="false" :styles="mapStyle">
                 <Marker v-if="device.latitude" :options="{
                   position: deviceLocation,
                   icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
@@ -136,12 +136,17 @@
         <!-- END MAP -->
       </div>
 
-      <SectionTitleLineWithButton :icon="mdiUpload" label="Uplinks" title="Uplinks" class="mt-10" main>
+      <SectionTitleLineWithButton :icon="mdiUpload" label="Uplinks Data" title="Uplink Data" class="mt-10">
         <!--  -->
       </SectionTitleLineWithButton>
       <CardBox hasTable>
         <TableUplinkList :uplinks="uplinks" :links="links" noIcon />
       </CardBox>
+
+      <SectionTitleLineWithButton :icon="mdiDownload" label="Downlink History" title="Downlink History" class="mt-10">
+        <!--  -->
+      </SectionTitleLineWithButton>
+
     </SectionMain>
   </LayoutAuthenticated>
 </template>
@@ -153,7 +158,7 @@ import { computed } from 'vue';
 import SectionMain from '@/Components/SectionMain.vue';
 import CardBox from '@/Components/CardBox.vue';
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue';
-import { mdiArrowLeft, mdiDevices, mdiUpload } from '@mdi/js';
+import { mdiArrowLeft, mdiDevices, mdiDownload, mdiUpload } from '@mdi/js';
 import BaseButton from '@/Components/BaseButton.vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { useStyleStore } from '@/Stores/style';
