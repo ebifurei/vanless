@@ -14,14 +14,15 @@ class DeviceStatusChecked implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $count;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($count)
     {
-        //
+        $this->count = $count;
     }
 
     /**
@@ -32,5 +33,12 @@ class DeviceStatusChecked implements ShouldBroadcast
     public function broadcastOn()
     {
         return ['device-status-checked'];
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'total_device_changed_to_inactive' => $this->count,
+        ];
     }
 }

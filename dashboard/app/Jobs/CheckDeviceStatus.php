@@ -34,16 +34,15 @@ class CheckDeviceStatus implements ShouldQueue
     public function handle()
     {
         $now = Carbon::now();
-        Device::where('status', 'active')->chunk(10, function ($devices) use ($now) {
-            $deviceIds = [];
+        $deviceIds = [];
+        Device::where('status', 'active')->chunk(10, function ($devices) use ($now, &$deviceIds) {
             foreach ($devices as $device) {
                 if ($device->latest_payload_at->diffInMinutes($now) > 10) {
                     array_push($deviceIds, $device->id);
                 }
             }
-            Device::whereIn('id', $deviceIds)->update(['status' => 'inactive']);
         });
-
-        event(new DeviceStatusChecked());
+        Device::whereIn('id', $deviceIds)->update(['status' => 'inactive']);
+        event(new DeviceStatusChecked(count($deviceIds)));
     }
 }
