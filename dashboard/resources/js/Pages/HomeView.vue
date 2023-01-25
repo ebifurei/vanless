@@ -18,8 +18,13 @@ const subscribe = Echo.channel('uplink-received').listen('UplinkReceived', (e) =
   Inertia.reload();
 });
 
+const subscribe2 = Echo.channel('device-status-changed').listen('DeviceStatusChanged', (e) => {
+  Inertia.reload();
+});
+
 onMounted(() => {
   subscribe;
+  subscribe2;
 });
 
 </script>
