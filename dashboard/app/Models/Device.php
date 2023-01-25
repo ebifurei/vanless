@@ -15,6 +15,9 @@ class Device extends Model
     protected $casts = [
         'latest_payload' => 'array',
     ];
+    protected $dates = [
+        'latest_payload_at',
+    ];
 
     public function uplinks()
     {
