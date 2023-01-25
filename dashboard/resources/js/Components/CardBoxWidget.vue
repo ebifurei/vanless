@@ -12,6 +12,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import FormField from "@/Components/FormField.vue";
 import FormControl from "@/Components/FormControl.vue";
 import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
+import { format } from "date-fns";
 
 const isModalActive = ref(false);
 
@@ -125,7 +126,7 @@ const optionsSelect = ['active', 'inactive', 'onrepair', 'danger'];
           <NumberDynamic :value="number" :prefix="prefix" :suffix="suffix" />
         </h1>
         <h3 class="text-sm mt-2 leading-tight text-gray-500 dark:text-slate-400">
-          Last seen : {{ lastSeen }}
+          Last seen : {{ format(new Date(lastSeen), 'dd MMMM HH:mm:ss') }}
         </h3>
       </div>
       <BaseIcon v-if="icon" :path="deviceStatusIcon(icon)" size="75" w="" h="h-16" :class="deviceStatusColor(color)" />
