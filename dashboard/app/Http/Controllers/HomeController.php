@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DeviceResourcePublic;
 use App\Http\Resources\UplinkResource;
+use App\Models\Device;
 use App\Models\Uplink;
 use App\Models\User;
 use Illuminate\Http\Request;

@@ -19,6 +19,10 @@
             required />
         </FormField>
 
+        <FormField label="fPort" label-for="fPort">
+          <FormControl type="textarea" v-model="form.fPort" id="Port" autocomplete="current-fPort" required />
+        </FormField>
+
         <FormField label="time" label-for="time">
           <FormControl type="datetime-local" id="time" name="time" v-model="form.rxInfo[0].time" required />
         </FormField>

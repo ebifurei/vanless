@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DownlinkResource;
 use App\Http\Resources\UplinkResource;
 use App\Models\Device;
 use Illuminate\Http\Request;
@@ -24,9 +25,13 @@ class DeviceController extends Controller
         $uplinks = $device->uplinks()->latest()->paginate(6)
             ->through(fn ($uplink) => new UplinkResource($uplink));
 
+        $downlinks = $device->downlinks()->latest()->paginate(6)
+            ->through(fn ($downlink) => new DownlinkResource($downlink));
+
         return Inertia::render('Devices/Show', [
             'device' => $device,
             'uplinks' => $uplinks,
+            'downlinks' => $downlinks,
         ]);
     }
 
@@ -41,6 +46,9 @@ class DeviceController extends Controller
             'name'  => 'required|max:255',
             'device_id' => 'required|max:255',
             'device_eui' => 'required|max:255',
+            'device_class' => 'nullable|max:255',
+            'device_normal_interval' => 'nullable|max:255',
+            'device_alert_interval' => 'nullable|max:255',
             'status' => 'nullable',
             'description' => 'nullable|max:255',
             'address' => 'nullable|max:255',
@@ -67,6 +75,9 @@ class DeviceController extends Controller
             'name'  => 'nullable|max:255',
             'status' => 'nullable',
             'device_eui' => 'nullable|max:255',
+            'device_class' => 'nullable',
+            'device_normal_interval' => 'nullable',
+            'device_alert_interval' => 'nullable',
             'description' => 'nullable|max:255',
             'address' => 'nullable|max:255',
             'latitude' => 'nullable',

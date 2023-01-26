@@ -15,10 +15,18 @@ class Device extends Model
     protected $casts = [
         'latest_payload' => 'array',
     ];
+    protected $dates = [
+        'latest_payload_at',
+    ];
 
     public function uplinks()
     {
         return $this->hasMany(Uplink::class, 'device_id', 'device_id');
+    }
+
+    public function downlinks()
+    {
+        return $this->hasMany(Downlink::class, 'device_id', 'device_id');
     }
 
     public function uplinkCounterDaily()

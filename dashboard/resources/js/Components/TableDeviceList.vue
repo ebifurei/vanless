@@ -14,6 +14,7 @@ import BaseButtons from '@/Components/BaseButtons.vue';
 import BaseDivider from '@/Components/BaseDivider.vue';
 import CardBoxComponentEmpty from '@/Components/CardBoxComponentEmpty.vue';
 import CardBox from '@/Components/CardBox.vue';
+import { format } from 'date-fns';
 
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const selectedDevice = ref(null);
@@ -87,6 +88,8 @@ const handleDeleteConfirm = () => {
             <th>Name</th>
             <th>Device_id</th>
             <th>Device EUI</th>
+            <th>Device Class</th>
+            <th>Uplink Interval</th>
             <th>Address</th>
             <th>Progress Daily</th>
             <th>Last Payload</th>
@@ -115,6 +118,12 @@ const handleDeleteConfirm = () => {
             <td data-label="Device EUI">
               {{ device.device_eui }}
             </td>
+            <td data-label="Device Class">
+              {{ device.device_class ?? "A" }}
+            </td>
+            <td data-label="Uplink Interval">
+              {{ device.device_normal_interval ?? "5" }}
+            </td>
             <td data-label="Address">
               {{ device.address ?? "No address" }}
             </td>
@@ -131,7 +140,7 @@ const handleDeleteConfirm = () => {
               </div>
             </td>
             <td data-label="Last seen">
-              {{ device.latest_payload_at }}
+              {{ format(new Date(device.latest_payload_at), 'dd-mm-yy HH:mm:ss') }}
             </td>
             <td data-label="Actions">
               <div class="space-x-1">

@@ -26,6 +26,9 @@ class UpdateDeviceUplinkCounter implements ShouldQueue
      */
     public function handle(UplinkReceived $event)
     {
+        if ($event->mapper->getPort() > 3) {
+            return;
+        };
         $device = $event->device;
         $uplink_counter = $device->uplink_counter ?? 0;
         $uplink_counter += 1;

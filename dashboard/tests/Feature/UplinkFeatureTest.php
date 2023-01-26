@@ -188,4 +188,37 @@ class UplinkFeatureTest extends TestCase
     //     ]);
     // }
 
+    /** @test */
+    public function it_can_change_device_status_from_port_when_uplink_received()
+    {
+        $uplink = $this->generateChirpstackUplink();
+
+        $uplink["fPort"] = 2;
+
+        $this->post(route('uplink.chirpstack', [
+            'event' => 'up'
+        ]), $uplink);
+
+        $this->assertDatabaseHas('devices', [
+            'device_id' => $uplink['deviceName'],
+            'status' => 'danger'
+        ]);
+    }
+
+    /** @test */
+    public function it_can_change_device_status_from_port_when_uplink_received_2()
+    {
+        $uplink = $this->generateChirpstackUplink();
+
+        $uplink["fPort"] = 3;
+
+        $this->post(route('uplink.chirpstack', [
+            'event' => 'up'
+        ]), $uplink);
+
+        $this->assertDatabaseHas('devices', [
+            'device_id' => $uplink['deviceName'],
+            'status' => 'onrepair'
+        ]);
+    }
 }

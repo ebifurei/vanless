@@ -125,7 +125,7 @@ if (props.ctrlKFocus) {
 <template>
   <div class="relative">
     <select v-if="computedType === 'select'" :id="id" v-model="computedValue" :name="name" :class="inputElClass">
-      <option v-for="option in options" :key="option.id ?? option" :value="option">
+      <option v-for="option in options" :key="option.id ?? option" :value="option.value">
         {{ option.label ?? option }}
       </option>
     </select>

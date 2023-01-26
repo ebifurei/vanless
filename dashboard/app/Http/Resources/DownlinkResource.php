@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Device;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UplinkResource extends JsonResource
+class DownlinkResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +19,12 @@ class UplinkResource extends JsonResource
         return [
             'id' => $this->id,
             'device_id' => $this->device_id,
-            'date' => $this->date,
+            'command' => $this->command,
+            'status' => $this->status,
+            'payload' => $this->payload,
             'port' => $this->port,
-            'payloads' => $this->payloads,
-            'created_at' => $this->created_at->timezone($timezone)->toTimeString(),
+            'created_at' => $this->created_at->timezone($timezone)->toDateTimeString(),
+            'updated_at' => $this->created_at->timezone($timezone)->toDateTimeString(),
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\DownlinkController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotifyMailController;
@@ -31,7 +32,7 @@ Route::get('/', function () {
 require __DIR__ . '/auth.php';
 // group route dashboard device location uplink as auth
 
-// send uplink to chirpstack if visit /uplink/test
+// send uplink for test to chirpstack
 Route::get('/uplink/test', function () {
     return Inertia::render('UplinkTest');
 });
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('ProfileView');
     })->name('profile');
     Route::resource('user', UserController::class);
+    Route::post('/downlink/send', [DownlinkController::class, 'sendDownlink'])->name('downlink.send');
 });
 
 // notification test
