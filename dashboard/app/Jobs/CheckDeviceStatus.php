@@ -16,14 +16,15 @@ class CheckDeviceStatus implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $interval;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($interval = 10)
     {
-        //
+        $this->interval = $interval;
     }
 
     /**
@@ -37,7 +38,7 @@ class CheckDeviceStatus implements ShouldQueue
         $deviceIds = [];
         Device::where('status', 'active')->chunk(10, function ($devices) use ($now, &$deviceIds) {
             foreach ($devices as $device) {
-                if ($device->latest_payload_at->diffInMinutes($now) > 10) {
+                if ($device->latest_payload_at->diffInMinutes($now) > $this->interval) {
                     array_push($deviceIds, $device->id);
                 }
             }
