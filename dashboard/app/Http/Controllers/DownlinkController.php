@@ -13,15 +13,17 @@ class DownlinkController extends Controller
     {
         $request->validate([
             'device_id' => 'required',
-            'payload' => 'required',
-            'port' => 'required',
+            'command' => 'nullable|max:255',
+            'payload' => 'required|integer|max:150',
+            'port' => 'required|integer|max:255',
         ]);
 
         $device = Device::where('device_id', $request->device_id)->firstOrFail();
 
         // create downlink to table
-        $downlink_data = Downlink::create([
+        Downlink::create([
             'device_id' => $device->device_id,
+            'command' => $request->command,
             'payload' => $request->payload,
             'port' => $request->port,
         ]);
@@ -31,6 +33,6 @@ class DownlinkController extends Controller
         $downlink = new ChirpStackDownlink();
         $downlink->sendDownlink($device_eui, $request->payload, $request->port);
 
-        return response()->noContent();
+        return redirect()->back()->with('success', 'Downlink sent!');
     }
 }

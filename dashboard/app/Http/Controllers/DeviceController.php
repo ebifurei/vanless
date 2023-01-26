@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DownlinkResource;
 use App\Http\Resources\UplinkResource;
 use App\Models\Device;
 use Illuminate\Http\Request;
@@ -24,9 +25,13 @@ class DeviceController extends Controller
         $uplinks = $device->uplinks()->latest()->paginate(6)
             ->through(fn ($uplink) => new UplinkResource($uplink));
 
+        $downlinks = $device->downlinks()->latest()->paginate(6)
+            ->through(fn ($downlink) => new DownlinkResource($downlink));
+
         return Inertia::render('Devices/Show', [
             'device' => $device,
             'uplinks' => $uplinks,
+            'downlinks' => $downlinks,
         ]);
     }
 
