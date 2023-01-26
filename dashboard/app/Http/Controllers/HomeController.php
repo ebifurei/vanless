@@ -42,13 +42,9 @@ class HomeController extends Controller
                     'time' => $uplink->created_at->timezone('Asia/Jakarta')->toTimeString(),
                 ];
             });
-        $devices = DeviceResourcePublic::collection(Device::orderByRaw('FIELD(status, "danger", "active", "onrepair", "inactive")')
-            ->latest()
-            ->get());
 
         return Inertia::render('HomeView', [
             'uplinks' => $uplinks,
-            'devices' => $devices,
         ]);
     }
 }
