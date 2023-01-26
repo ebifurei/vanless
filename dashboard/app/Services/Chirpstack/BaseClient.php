@@ -17,7 +17,7 @@ class BaseClient
             'headers' => [
                 'Grpc-Metadata-Authorization' => "Bearer {$this->token}"
             ],
-            'timeout' => 5,
+            'timeout' => 10,
         ]);
     }
 }
