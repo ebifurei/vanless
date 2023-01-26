@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DeviceResourcePublic;
 use App\Http\Resources\UplinkResource;
+use App\Models\Device;
 use App\Models\Uplink;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,9 +42,13 @@ class HomeController extends Controller
                     'time' => $uplink->created_at->timezone('Asia/Jakarta')->toTimeString(),
                 ];
             });
+        $devices = DeviceResourcePublic::collection(Device::orderByRaw('FIELD(status, "danger", "active", "onrepair", "inactive")')
+            ->latest()
+            ->get());
 
         return Inertia::render('HomeView', [
             'uplinks' => $uplinks,
+            'devices' => $devices,
         ]);
     }
 }

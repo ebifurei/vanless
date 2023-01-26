@@ -45,10 +45,6 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
-            'devices' => function () {
-                // return Device Resource Public with order by status from danger, inactive, mainternance, active
-                return DeviceResourcePublic::collection(Device::orderByRaw('FIELD(status, "danger", "inactive", "maintenance", "active")')->latest()->get());
-            },
         ]);
     }
 }

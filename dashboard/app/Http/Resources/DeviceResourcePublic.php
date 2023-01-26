@@ -27,7 +27,6 @@ class DeviceResourcePublic extends JsonResource
             'latitude' => $this->latitude ?? -7.765955,
             'longitude' => $this->longitude ?? 110.371561,
             'created_at' => $this->created_at->timezone('Asia/Jakarta')->toDateTimeString(),
-
         ];
     }
 }
