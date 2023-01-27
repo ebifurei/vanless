@@ -8,13 +8,10 @@ class ChirpStackDownlink extends BaseClient implements DownlinkClientInterface
 {
     public function sendDownlink($devId, $payload, $port)
     {
-        if ($payload === 0) {
-            $payloadRaw = 'AA==';
-        } else {
-            $t = gmp_init($payload);
-            $payload = gmp_export($t, 1);
-            $payloadRaw = base64_encode($payload);
-        }
+        $payloadHex = dechex($payload);
+        $payloadHex = str_pad($payloadHex, 2, '0', STR_PAD_LEFT);
+        $payloadBin = pack("H*", $payloadHex);
+        $payloadRaw = base64_encode($payloadBin);
 
         $response = $this->client->post("api/devices/{$devId}/queue", [
             'json' => [

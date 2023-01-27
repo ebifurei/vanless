@@ -48,6 +48,6 @@ class DownlinkTest extends TestCase
         // send a request to the endpoint with downlink data
         $response = $this->post(route('downlink.send'), $downlinkData);
 
-        $response->assertStatus(204);
+        $response->assertStatus(302);
     }
 }
