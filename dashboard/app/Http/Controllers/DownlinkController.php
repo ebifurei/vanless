@@ -20,6 +20,15 @@ class DownlinkController extends Controller
 
         $device = Device::where('device_id', $request->device_id)->firstOrFail();
 
+        // send downlink to device
+        $device_eui = $device->device_eui;
+        $downlink = new ChirpStackDownlink();
+        $response = $downlink->sendDownlink($device_eui, $request->payload, $request->port);
+
+        if ($response != 200) {
+            return redirect()->back()->with('error', 'Downlink failed!');
+        }
+
         // create downlink to table
         Downlink::create([
             'device_id' => $device->device_id,
@@ -27,11 +36,6 @@ class DownlinkController extends Controller
             'payload' => $request->payload,
             'port' => $request->port,
         ]);
-
-        // send downlink to device
-        $device_eui = $device->device_eui;
-        $downlink = new ChirpStackDownlink();
-        $downlink->sendDownlink($device_eui, $request->payload, $request->port);
 
         return redirect()->back()->with('success', 'Downlink sent!');
     }
