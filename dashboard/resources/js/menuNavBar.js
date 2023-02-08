@@ -13,26 +13,32 @@ import {
 } from "@mdi/js";
 
 export default [
+  // {
+  //   icon: mdiMenu,
+  //   label: "Sample menu",
+  //   menu: [
+  //     {
+  //       icon: mdiClockOutline,
+  //       label: "Item One",
+  //     },
+  //     {
+  //       icon: mdiCloud,
+  //       label: "Item Two",
+  //     },
+  //     {
+  //       isDivider: true,
+  //     },
+  //     {
+  //       icon: mdiCrop,
+  //       label: "Item Last",
+  //     },
+  //   ],
+  // },
   {
-    icon: mdiMenu,
-    label: "Sample menu",
-    menu: [
-      {
-        icon: mdiClockOutline,
-        label: "Item One",
-      },
-      {
-        icon: mdiCloud,
-        label: "Item Two",
-      },
-      {
-        isDivider: true,
-      },
-      {
-        icon: mdiCrop,
-        label: "Item Last",
-      },
-    ],
+    icon: mdiThemeLightDark,
+    label: "Light/Dark",
+    isDesktopNoLabel: true,
+    isToggleLightDark: true,
   },
   {
     isCurrentUser: true,
@@ -59,24 +65,5 @@ export default [
         isLogout: true,
       },
     ],
-  },
-  {
-    icon: mdiThemeLightDark,
-    label: "Light/Dark",
-    isDesktopNoLabel: true,
-    isToggleLightDark: true,
-  },
-  {
-    icon: mdiGithub,
-    label: "GitHub",
-    isDesktopNoLabel: true,
-    href: "#",
-    target: "_blank",
-  },
-  {
-    icon: mdiLogout,
-    label: "Log out",
-    isDesktopNoLabel: true,
-    isLogout: true,
   },
 ];

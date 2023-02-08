@@ -31,6 +31,6 @@ class Device extends Model
 
     public function uplinkCounterDaily()
     {
-        return $this->hasOne(UplinkCounterDaily::class, 'device_id', 'device_id');
+        return $this->hasMany(UplinkCounterDaily::class, 'device_id', 'device_id');
     }
 }
