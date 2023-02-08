@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useStyleStore } from "@/Stores/style.js";
 import { mdiMinus, mdiPlus } from "@mdi/js";
@@ -18,11 +18,20 @@ const props = defineProps({
 // Add itemHref
 const itemHref = computed(() => props.item.route ? route(props.item.route) : props.item.href)
 
+// const secondCheck = computed(() => {
+//   return route().current().startsWith('device.') &&
+//     (props.item.route ? props.item.route.startsWith('device.') : false)
+// })
+
+const secondCheck = computed(() => {
+  return ['device.', 'user.'].some(item => route().current().startsWith(item) &&
+    (props.item.route ? props.item.route.startsWith(item) : false))
+});
 // Add activeInactiveStyle
 const activeInactiveStyle = computed(
   () => props.item.route && route().current(props.item.route)
     ? styleStore.asideMenuItemActiveStyle
-    : ''
+    : secondCheck.value ? styleStore.asideMenuItemActiveStyle : ''
 )
 
 const emit = defineEmits(["menu-click"]);
@@ -51,8 +60,12 @@ const menuClick = (event) => {
 
   if (hasDropdown.value) {
     isDropdownActive.value = !isDropdownActive.value;
-  }
+  };
 };
+
+isDropdownActive.value = ['device.', 'location.index', 'uplink.index'].some(routeStart => route().current().startsWith(routeStart));
+
+
 </script>
 
 <template>

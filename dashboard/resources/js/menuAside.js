@@ -1,13 +1,11 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiGithub,
   mdiTable,
-  mdiViewList,
-  mdiPalette,
   mdiGoogleMaps,
   mdiUpload,
   mdiAccountMultiple,
+  mdiDevices,
 } from "@mdi/js";
 
 export default [
@@ -17,29 +15,25 @@ export default [
     label: "Dashboard",
   },
   {
-    route: "device.index",
-    label: "Devices Table",
-    icon: mdiTable,
-  },
-  {
-    route: "location.index",
-    label: "Location",
-    icon: mdiGoogleMaps,
-  },
-  {
-    route: "uplink.index",
-    label: "Uplinks Table",
-    icon: mdiUpload,
-  },
-  {
-    route: "style",
-    label: "Styles",
-    icon: mdiPalette,
-  },
-  {
-    route: "profile",
-    label: "Profile",
-    icon: mdiAccountCircle,
+    label: "Device",
+    icon: mdiDevices,
+    menu: [
+      {
+        route: "device.index",
+        label: "Device List",
+        icon: mdiTable,
+      },
+      {
+        route: "location.index",
+        label: "Device Location",
+        icon: mdiGoogleMaps,
+      },
+      {
+        route: "uplink.index",
+        label: "Device Uplink",
+        icon: mdiUpload,
+      },
+    ],
   },
   {
     route: "user.index",
@@ -47,21 +41,8 @@ export default [
     icon: mdiAccountMultiple,
   },
   {
-    label: "Dropdown",
-    icon: mdiViewList,
-    menu: [
-      {
-        label: "Item One",
-      },
-      {
-        label: "Item Two",
-      },
-    ],
-  },
-  {
-    href: "#",
-    label: "GitHub",
-    icon: mdiGithub,
-    target: "_blank",
+    route: "profile",
+    label: "Profile",
+    icon: mdiAccountCircle,
   },
 ];
