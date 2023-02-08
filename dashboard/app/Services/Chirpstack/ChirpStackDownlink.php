@@ -13,16 +13,20 @@ class ChirpStackDownlink extends BaseClient implements DownlinkClientInterface
         $payloadBin = pack("H*", $payloadHex);
         $payloadRaw = base64_encode($payloadBin);
 
-        $response = $this->client->post("api/devices/{$devId}/queue", [
-            'json' => [
-                'deviceQueueItem' => [
-                    'confirmed' => false,
-                    'data' => $payloadRaw,
-                    'devEUI' => $devId,
-                    'fPort' => $port
+        try {
+            $response = $this->client->post("api/devices/{$devId}/queue", [
+                'json' => [
+                    'deviceQueueItem' => [
+                        'confirmed' => false,
+                        'data' => $payloadRaw,
+                        'devEUI' => $devId,
+                        'fPort' => $port
+                    ]
                 ]
-            ]
-        ]);
+            ]);
+        } catch (\Exception $e) {
+            return $e->getCode();
+        }
 
         return $response->getStatusCode();
     }
