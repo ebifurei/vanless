@@ -140,7 +140,7 @@ const handleDeleteConfirm = () => {
               </div>
             </td>
             <td data-label="Last seen">
-              {{ format(new Date(device.latest_payload_at), 'dd-mm-yy HH:mm:ss') }}
+              {{ format(new Date(device.latest_payload_at), 'dd-LL-yy HH:mm:ss') }}
             </td>
             <td data-label="Actions">
               <div class="space-x-1">

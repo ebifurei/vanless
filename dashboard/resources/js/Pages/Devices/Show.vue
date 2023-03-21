@@ -63,11 +63,12 @@
                 </tr>
                 <tr>
                   <td class="font-semibold pr-3 text-left">Last Payload at</td>
-                  <td class="px-4 py-2 text-right">{{ device.latest_payload_at }}</td>
+                  <td class="px-4 py-2 text-right">{{ format(new Date(device.latest_payload_at), 'dd-LL-yy HH:mm:ss') }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="font-semibold pr-3 text-left">Created At</td>
-                  <td class="px-4 py-2 text-right">{{ device.created_at }}</td>
+                  <td class="px-4 py-2 text-right">{{ format(new Date(device.created_at), 'dd-LL-yy HH:mm:ss') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -86,17 +87,17 @@
                   <td data-label="Device EUI">
                     {{ device.device_eui }}
                   </td>
-                  <td data-label="Description">
+                  <td data-label="Description" class="overflow-auto">
                     {{ device.description ?? 'No Description' }}
                   </td>
-                  <td data-label="Address">
+                  <td data-label="Address" class="overflow-auto">
                     {{ device.address ?? "No address" }}
                   </td>
                   <td data-label="Progress Daily">
                     <div>
-                      <progress class="progress progress-success" :value="device.progress_daily ?? 20" max="144">
-                        {{ device.progress_daily ?? 20 }}/144
-                      </progress> {{ device.progress_daily ?? 20 }}/144
+                      <progress class="progress progress-success" :value="device.progress_daily ?? 0" max="144">
+                        {{ device.progress_daily ?? 0 }}/144
+                      </progress> {{ device.progress_daily ?? 0 }}/144
                     </div>
                   </td>
                   <td data-label="Last Payload">
@@ -105,10 +106,10 @@
                     </div>
                   </td>
                   <td data-label="Last Payload at">
-                    {{ device.latest_payload_at }}
+                    {{ format(new Date(device.latest_payload_at), 'dd-LL-yy HH:mm:ss') }}
                   </td>
                   <td data-label="Created At">
-                    {{ device.created_at }}
+                    {{ format(new Date(device.created_at), 'dd-LL-yy HH:mm:ss') }}
                   </td>
                 </tr>
               </tbody>
@@ -193,6 +194,7 @@ import CardBoxModal from '@/Components/CardBoxModal.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import FormField from '@/Components/FormField.vue';
 import FormControl from '@/Components/FormControl.vue';
+import { format } from 'date-fns';
 
 const device = computed(() => usePage().props.value.device);
 const googleAPI = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
