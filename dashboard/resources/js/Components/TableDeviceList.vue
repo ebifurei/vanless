@@ -124,7 +124,7 @@ const handleDeleteConfirm = () => {
             <td data-label="Uplink Interval">
               {{ device.device_normal_interval ?? "5" }}
             </td>
-            <td data-label="Address">
+            <td data-label="Address" class="overflow-auto">
               {{ device.address ?? "No address" }}
             </td>
             <td data-label="Progress Daily">
@@ -208,6 +208,4 @@ const handleDeleteConfirm = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

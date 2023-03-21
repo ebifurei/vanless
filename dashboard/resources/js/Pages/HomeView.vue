@@ -34,7 +34,7 @@ onMounted(() => {
 
     <Head title="Dashboard" />
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Ganti" main>
         <!-- -->
       </SectionTitleLineWithButton>
       <div v-if="$page.props.devices" class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">

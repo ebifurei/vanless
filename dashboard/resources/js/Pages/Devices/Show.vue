@@ -43,18 +43,18 @@
                 </tr>
                 <tr>
                   <td class="font-semibold pr-3 text-left">Description</td>
-                  <td class="px-4 py-2 text-right">{{ device.description ?? 'No Description' }}</td>
+                  <td class="px-4 py-2 text-right overflow-auto">{{ device.description ?? 'No Description' }}</td>
                 </tr>
                 <tr>
                   <td class="font-semibold pr-3 text-left">Address</td>
-                  <td class="px-4 py-2 text-right">{{ device.address ?? 'No Address' }}</td>
+                  <td class="px-4 py-2 text-right overflow-auto">{{ device.address ?? 'No Address' }}</td>
                 </tr>
                 <tr>
                   <td class="font-semibold pr-3 text-left">Progress Daily</td>
                   <td class="text-right">
-                    <progress class="progress progress-success" :value="device.progress_daily ?? 20" max="144">
-                      {{ device.progress_daily ?? 20 }}/144
-                    </progress> {{ device.progress_daily ?? 20 }}/144
+                    <progress class="progress progress-success" :value="device.progress_daily ?? 0" max="144">
+                      {{ device.progress_daily ?? 0 }}/144
+                    </progress> {{ device.progress_daily ?? 0 }}/144
                   </td>
                 </tr>
                 <tr>
@@ -144,8 +144,8 @@
       </CardBox>
 
       <SectionTitleLineWithButton :icon="mdiDownload" label="Downlink History" title="Downlink History" class="mt-10">
-        <BaseButton class="border-slate-400 dark:border-slate-600" :icon="mdiDownload" label="Send Command"
-          color="light" rounded-full small @click="isModalActive = true" />
+        <BaseButton class="border-slate-400 dark:border-slate-600" :icon="mdiDownload" label="Send Command" color="light"
+          rounded-full small @click="isModalActive = true" />
       </SectionTitleLineWithButton>
 
       <CardBox hasTable v-if="downlinks">
