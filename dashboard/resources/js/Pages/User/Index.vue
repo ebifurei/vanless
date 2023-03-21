@@ -4,7 +4,7 @@
     <Head title="Users" />
 
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="User List" main>
+      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="User Lists" main>
         <Link :href="route('user.create')">
         <BaseButton class="border-slate-400 dark:border-slate-600" :icon="mdiPlus" label="Create User" color="light"
           rounded-full small />
@@ -31,6 +31,4 @@ const links = computed(() => usePage().props.value.users.links);
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

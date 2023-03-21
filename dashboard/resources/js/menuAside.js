@@ -20,17 +20,17 @@ export default [
     menu: [
       {
         route: "device.index",
-        label: "Device List",
+        label: "Device Lists",
         icon: mdiTable,
       },
       {
         route: "location.index",
-        label: "Device Location",
+        label: "Device Locations",
         icon: mdiGoogleMaps,
       },
       {
         route: "uplink.index",
-        label: "Device Uplink",
+        label: "Device Uplinks",
         icon: mdiUpload,
       },
     ],

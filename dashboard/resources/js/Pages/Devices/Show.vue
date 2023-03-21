@@ -1,7 +1,7 @@
 <template>
   <LayoutAuthenticated>
 
-    <Head title="Device" />
+    <Head title="Device Detail" />
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiDevices" :title="`${device.name ?? device.device_id}`" main>
         <Link :href="route('device.index')">

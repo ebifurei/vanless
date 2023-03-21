@@ -1,9 +1,9 @@
 <template>
   <LayoutAuthenticated>
 
-    <Head title="Devices" />
+    <Head title="Device Lists" />
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Devices List" main>
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Device Lists" main>
         <Link :href="route('device.create')">
         <BaseButton class="border-slate-400 dark:border-slate-600" :icon="mdiPlus" label="Create Device" color="light"
           rounded-full small />
