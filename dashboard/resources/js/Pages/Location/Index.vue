@@ -1,9 +1,9 @@
 <template>
   <LayoutAuthenticated>
 
-    <Head title="Locations" />
+    <Head title="Device Locations" />
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiMapCheckOutline" title="Locations" main>
+      <SectionTitleLineWithButton :icon="mdiMapCheckOutline" title="Device Locations" main>
         <!--  -->
       </SectionTitleLineWithButton>
       <GoogleMap :api-key="googleAPI" style="width: 100%; height: 500px" :center="getCenter" :zoom="16"
@@ -89,6 +89,4 @@ const getIcon = (l) => {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

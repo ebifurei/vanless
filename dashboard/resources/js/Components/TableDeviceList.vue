@@ -124,7 +124,7 @@ const handleDeleteConfirm = () => {
             <td data-label="Uplink Interval">
               {{ device.device_normal_interval ?? "5" }}
             </td>
-            <td data-label="Address">
+            <td data-label="Address" class="overflow-auto">
               {{ device.address ?? "No address" }}
             </td>
             <td data-label="Progress Daily">
@@ -140,7 +140,7 @@ const handleDeleteConfirm = () => {
               </div>
             </td>
             <td data-label="Last seen">
-              {{ format(new Date(device.latest_payload_at), 'dd-mm-yy HH:mm:ss') }}
+              {{ format(new Date(device.latest_payload_at), 'dd-LL-yy HH:mm:ss') }}
             </td>
             <td data-label="Actions">
               <div class="space-x-1">
@@ -208,6 +208,4 @@ const handleDeleteConfirm = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

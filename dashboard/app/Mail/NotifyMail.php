@@ -34,7 +34,7 @@ class NotifyMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('admin@vanless.me', 'Vanless Notify'),
+            from: new Address('admin@vandect.me', 'VanDect Notify'),
             subject: $this->data['subject'],
         );
     }

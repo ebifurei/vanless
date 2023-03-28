@@ -1,9 +1,9 @@
 <template>
   <LayoutAuthenticated>
 
-    <Head title="Uplink" />
+    <Head title="Device Uplinks" />
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiLinkVariant" title="Uplink" main>
+      <SectionTitleLineWithButton :icon="mdiLinkVariant" title="Device Uplinks" main>
         <!--  -->
       </SectionTitleLineWithButton>
 

@@ -49,12 +49,12 @@ class UplinkController extends Controller
 
         // device
         $device = Device::firstOrCreate([
-            'device_id' => $mapper->getDeviceId(),
+            'device_eui' => $mapper->getEui(),
         ], [
+            'device_id' => $mapper->getDeviceId(),
             'name' => null,
             'timezone' => 'Asia/Jakarta',
             'status' => 'active',
-            'device_eui' => $mapper->getEui(),
             'device_class' => null,
             'device_normal_interval' => null,
             'device_alert_interval' => null,

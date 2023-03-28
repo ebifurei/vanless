@@ -43,7 +43,7 @@ class DeviceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|max:255',
+            'name' => 'required|max:255',
             'device_id' => 'required|max:255',
             'device_eui' => 'required|max:255',
             'device_class' => 'nullable|max:255',
